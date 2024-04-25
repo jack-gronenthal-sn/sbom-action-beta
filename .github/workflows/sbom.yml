@@ -14,13 +14,16 @@ on:
       sn_devops_integration_token:
         required: false
 
+defaults:
+  run:
+    working-directory: ./scripts
+
 jobs:
   echo-inputs:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./scripts
     steps:
+      - name: ls
+        run: ls -A >> $GITHUB_OUTPUT
       - name: Checkout the repository to the runner
         uses: actions/checkout@v4
       - name: Make scripts executable
