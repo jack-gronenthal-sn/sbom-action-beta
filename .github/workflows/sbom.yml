@@ -14,19 +14,21 @@ on:
       sn_devops_integration_token:
         required: false
 
-defaults:
-  run:
-    working-directory: ./scripts
-
 jobs:
-  echo-inputs:
+  checkout-repo:
     runs-on: ubuntu-latest
     steps:
-      - name: list
-        run: ls -A
       - name: Checkout the repository to the runner
         uses: actions/checkout@v4
-      - name: Make scripts executable
-        run: chmod +x ./input.sh
-      - name: Log workflow inputs
-        run: ./inputs.sh
+
+#jobs:
+#  echo-inputs:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: list
+#        run: ls -A
+#
+#      - name: Make scripts executable
+#        run: chmod +x ./input.sh
+#      - name: Log workflow inputs
+#        run: ./inputs.sh
