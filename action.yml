@@ -1,0 +1,14 @@
+name: 'ServiceNow SBOM'
+description: 'An GitHub Action to integrate directly into the ServiceNow SBOM application.'
+inputs:
+  target-repository:
+    description: 'The target repository that houses SBOM documents.'
+    required: true
+outputs:
+  target-repository:
+    description: 'The provided target repository.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.target-repository }}
