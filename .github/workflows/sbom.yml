@@ -7,12 +7,23 @@ on:
         required: true
         type: string
     secrets:
-      sample-secret:
+      sn_instance_url:
+        required: true
+      sn_orchestration_tool_id:
+        required: false
+      sn_devops_integration_token:
         required: false
 
 jobs:
   echo-inputs:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts
     steps:
-      - run: echo JACK
-        shell: bash
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v4
+      - name: Make scripts executable
+        run: chmod +x input.sh
+      - name: Log workflow inputs
+        run: ./inputs.sh
