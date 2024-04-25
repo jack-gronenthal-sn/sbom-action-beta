@@ -1,0 +1,10 @@
+name: servicenow-sbom
+run-name: ${{ github.actor }} is uploading a SBOM to ServiceNow.
+on: [push]
+
+jobs:
+  echo-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo JACK
+        shell: bash

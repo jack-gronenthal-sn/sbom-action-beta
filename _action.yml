@@ -8,13 +8,12 @@ inputs:
   ref:
     required: false
     description: The branch, tag or SHA to checkout. If undefined, default branch is picked.
-
 runs:
   using: 'composite'
   steps:
     - name: Echo Inputs
       run: |
-        echo "Target Repository: $TARGET_REPOSITORY"
+        echo "Target Repository: $TARGET_REPOSITORY" >> $GITHUB_OUTPUT
       shell: bash
       env:
         TARGET_REPOSITORY: ${{ inputs.target-repository }}
