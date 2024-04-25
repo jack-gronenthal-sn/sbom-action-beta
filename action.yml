@@ -1,14 +1,24 @@
 name: 'ServiceNow SBOM'
 description: 'An GitHub Action to integrate directly into the ServiceNow SBOM application.'
-inputs:
-  target-repository:
-    description: 'The target repository that houses SBOM documents.'
-    required: true
-outputs:
-  target-repository:
-    description: 'The provided target repository.'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.target-repository }}
+
+jobs:
+  servicenow-sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+#inputs:
+#  target-repository:
+#    description: 'The target repository that houses SBOM documents.'
+#    required: true
+#outputs:
+#  target-repository:
+#    description: 'The provided target repository.'
+#runs:
+#  - uses: actions/checkout@v4
+#    with:
+#      repository:
+#  using: 'docker'
+#  image: 'Dockerfile'
+#  args:
+#    - ${{ inputs.target-repository }}
