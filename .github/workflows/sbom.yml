@@ -23,14 +23,14 @@ jobs:
   log-inputs:
     runs-on: ubuntu-latest
     needs: checkout-repo
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./scripts
+#    defaults:
+#      run:
+#        shell: bash
+#        working-directory: ./scripts
     steps:
       - name: list
         run: ls -A
-      - name: Make scripts executable
-        run: chmod +x ./input.sh
-      - name: Log workflow inputs
-        run: ./inputs.sh
+#      - name: Make scripts executable
+#        run: chmod +x ./input.sh
+#      - name: Log workflow inputs
+#        run: ./inputs.sh
