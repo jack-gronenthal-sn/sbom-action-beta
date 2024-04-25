@@ -13,7 +13,8 @@ runs:
   using: 'composite'
   steps:
     - name: Echo Inputs
-      run: ./inputs.sh
+      run: |
+        echo "Target Repository: $TARGET_REPOSITORY"
       shell: bash
       env:
         TARGET_REPOSITORY: ${{ inputs.target-repository }}
