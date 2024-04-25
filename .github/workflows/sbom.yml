@@ -1,6 +1,14 @@
 name: servicenow-sbom
 run-name: ${{ github.actor }} is uploading a SBOM to ServiceNow.
-on: [push]
+on:
+  workflow_call:
+    inputs:
+      sbom-repository-name:
+        required: true
+        type: string
+    secrets:
+      sample-secret:
+        required: false
 
 jobs:
   echo-inputs:
