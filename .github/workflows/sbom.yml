@@ -24,6 +24,6 @@ jobs:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v4
       - name: Make scripts executable
-        run: chmod +x input.sh
+        run: chmod +x ./input.sh
       - name: Log workflow inputs
         run: ./inputs.sh
