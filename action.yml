@@ -2,7 +2,7 @@ name: 'ServiceNow SBOM'
 description: 'An GitHub Action to integrate directly into the ServiceNow SBOM application.'
 
 inputs:
-  target-repository-name:
+  target-repository:
     required: true
     description: The repository that has the target SBOM document.
   ref:
@@ -13,14 +13,14 @@ runs:
   using: 'composite'
   steps:
     - name: Echo Inputs
-      run: inputs.sh
+      run: ./inputs.sh
       shell: bash
       env:
-        TARGET_REPOSITORY: ${{ inputs.target-repository-name }}
+        TARGET_REPOSITORY: ${{ inputs.target-repository }}
     - name: Checkout Target Repository
       uses: actions/checkout@v4
       with:
-        repository: ${{ inputs.target-repository-name }}
+        repository: ${{ inputs.target-repository }}
 
 #inputs:
 #  target-repository:
