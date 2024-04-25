@@ -12,6 +12,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Echo Inputs
+      run: inputs.sh
+      shell: bash
+      env:
+        TARGET_REPOSITORY: ${{ inputs.target-repository-name }}
     - name: Checkout Target Repository
       uses: actions/checkout@v4
       with:
