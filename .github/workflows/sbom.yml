@@ -26,12 +26,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sanity check which repo has been checked out
-        run: echo "${{ github.repository }}, ${{ github.action_path }}"
+        run: echo "${{ github.repository }}, ${{ github.action_path }}, ${{ inputs.sbom-repository-name }}"
       - name: Checkout the repository to the runner
         uses: actions/checkout@v4
-#        with:
-#          repository: ${{ inputs.sbom-repository-name }}
-#          ref: main
+        with:
+          repository: ${{ inputs.sbom-repository-name }}
+          ref: ${{ inputs.sbom-repository-ref }}
       - name: list
         run: ls -A
       - name: list action path
