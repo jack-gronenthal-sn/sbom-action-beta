@@ -4,47 +4,42 @@ on:
   workflow_call:
     inputs:
       sbom-repository-name:
-        default: jack-gronenthal-sn/sbom-action-beta
-        description: The name of the repository holding the workflow.
-        required: false
-        type: string
-      sbom-repository-ref:
-        required: false
-        type: string
-        default: main
-        description: The tag reference for the SBOM Beta repository which the workflow should check out.
-      sbom-source-strategy:
+        description: The repository that holds the SBOM document.
         required: true
         type: string
-        description: The strategy the workflow should use to pick the SBOM. Valid options include repository and remote.
-      sbom-source-directory:
-        required: false
+      sbom-path:
+        description: The path to the SBOM document from the root directory.
         type: string
-        description: The absolute path to the SBOM directory from the root of the repository.
-    secrets:
-      sn_instance_url:
         required: true
-      sn_orchestration_tool_id:
-        required: false
-      sn_devops_integration_token:
+      ref:
+        description: The branch, tag, or SHA256 hash to checkout.
+        type: string
         required: false
 
-jobs:
-  checkout-repo:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repository to the runner
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ inputs.sbom-repository-name }}
-          ref: ${{ inputs.sbom-repository-ref }}
-      - name: Log Integration Inputs
-        run: ./inputs.sh
-        env:
-          SERVICE_NOW_INSTANCE_URL: Test
-          SBOM_SOURCE_STRATEGY: ${{ inputs.sbom-source-strategy }}
-          SBOM_SOURCE_DIRECTORY: ${{ inputs.sbom-source-directory }}
-          GITHUB_ACTION_PATH: ${{ github.action_path }}
+#    secrets:
+#      sn_instance_url:
+#        required: true
+#      sn_orchestration_tool_id:
+#        required: false
+#      sn_devops_integration_token:
+#        required: false
+
+#jobs:
+#  checkout-repo:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout the repository to the runner
+#        uses: actions/checkout@v4
+#        with:
+#          repository: ${{ inputs.sbom-repository-name }}
+#          ref: ${{ inputs.sbom-repository-ref }}
+#      - name: Log Integration Inputs
+#        run: ./inputs.sh
+#        env:
+#          SERVICE_NOW_INSTANCE_URL: Test
+#          SBOM_SOURCE_STRATEGY: ${{ inputs.sbom-source-strategy }}
+#          SBOM_SOURCE_DIRECTORY: ${{ inputs.sbom-source-directory }}
+#          GITHUB_ACTION_PATH: ${{ github.action_path }}
 #  log-inputs:
 #    runs-on: ubuntu-latest
 #    needs: checkout-repo
