@@ -38,13 +38,13 @@ jobs:
         with:
           repository: ${{ inputs.sbom-repository-name }}
           ref: ${{ inputs.sbom-repository-ref }}
-#      - run: chmod +x ./inputs.sh
       - name: Log Integration Inputs
         run: ./inputs.sh
         env:
           SERVICE_NOW_INSTANCE_URL: Test
           SBOM_SOURCE_STRATEGY: ${{ inputs.sbom-source-strategy }}
           SBOM_SOURCE_DIRECTORY: ${{ inputs.sbom-source-directory }}
+          GITHUB_ACTION_PATH: ${{ github.action_path }}
 #  log-inputs:
 #    runs-on: ubuntu-latest
 #    needs: checkout-repo
