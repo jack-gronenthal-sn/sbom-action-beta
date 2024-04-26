@@ -13,6 +13,8 @@ if [ "$SBOM_SOURCE_STRATEGY" = "$REPOSITORY_SOURCE_STRATEGY" ]; then
     exit 2
   fi
     DIRECTORY_PATH="/$SBOM_SOURCE_DIRECTORY"
+    echo "$GITHUB_ACTION_PATH"
+    ls "$GITHUB_ACTION_PATH"
     ls .
     ls "$DIRECTORY_PATH"
     if ! [ -d "$DIRECTORY_PATH" ]; then
