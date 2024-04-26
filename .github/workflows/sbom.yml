@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
+          ref: v1.0.21
       - name: list
         run: ls -A
       - name: list action path
