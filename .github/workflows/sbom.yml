@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.sbom-repository-name }}
-          token: ${{ secrets.SBOM_ACCESS_TOKEN }}
+#          token: ${{ secrets.SBOM_ACCESS_TOKEN }}
 #          ref: ${{ inputs.sbom-repository-ref }}
       - name: list
         run: ls -A
