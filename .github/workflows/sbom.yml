@@ -31,14 +31,14 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-#      - name: Verify Structure
-#        run: |
-#            echo WORKSPACE
-#            ls "$GITHUB_WORKSPACE"
-#            echo CLIENT
-#            ls "$GITHUB_WORKSPACE/client"
-#            echo SERVICE-NOW
-#            ls "$GITHUB_WORKSPACE/service-now"
+      - name: Verify Structure
+        run: |
+            echo WORKSPACE
+            ls "$GITHUB_WORKSPACE"
+            echo CLIENT
+            ls "$GITHUB_WORKSPACE/client"
+            echo SERVICE-NOW
+            ls "$GITHUB_WORKSPACE/service-now"
 
 #      - run: ls
 #      - run: echo "$GITHUB_WORKSPACE"
