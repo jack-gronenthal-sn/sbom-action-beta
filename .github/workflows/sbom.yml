@@ -23,6 +23,8 @@ jobs:
       - name: Checkout the ServiceNow SBOM repository
         uses: actions/checkout@v4
       - run: ls
+      - run: echo "$GITHUB_WORKSPACE"
+      - run: ls "$GITHUB_WORKSPACE"
 
 #    secrets:
 #      sn_instance_url:
