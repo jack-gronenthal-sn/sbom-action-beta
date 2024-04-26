@@ -1,3 +1,5 @@
 #!/bin/sh -l
 
-echo "Target Repository: $TARGET_REPOSITORY" >> $GITHUB_OUTPUT
+echo "::group::SBOM Integration Inputs"
+echo "ServiceNow Instance URL: $SERVICE_NOW_INSTANCE_URL"
+echo "::endgroup::"
