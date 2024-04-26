@@ -6,7 +6,7 @@ on:
       sbom-repository-name:
         default: jack-gronenthal-sn/sbom-action-beta
         description: The name of the repository holding the workflow.
-        required: true
+        required: false
         type: string
       sbom-repository-ref:
         required: true
@@ -26,12 +26,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sanity check which repo has been checked out
-        run: echo "${{ github.repository }}"
+        run: echo "${{ github.repository }}, ${{ github.action_path }}"
       - name: Checkout the repository to the runner
         uses: actions/checkout@v4
-        with:
-          repository: ${{ inputs.sbom-repository-name }}
-          ref: main
+#        with:
+#          repository: ${{ inputs.sbom-repository-name }}
+#          ref: main
       - name: list
         run: ls -A
       - name: list action path
