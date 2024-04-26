@@ -13,6 +13,14 @@ on:
         type: string
         default: main
         description: The tag reference for the SBOM Beta repository which the workflow should check out.
+      sbom-source-strategy:
+        required: true
+        type: string
+        description: The strategy the workflow should use to pick the SBOM. Valid options include repository and remote.
+      sbom-source-directory:
+        required: false
+        type: string
+        description: The absolute path to the SBOM directory from the root of the repository.
     secrets:
       sn_instance_url:
         required: true
@@ -35,6 +43,8 @@ jobs:
         run: ./inputs.sh
         env:
           SERVICE_NOW_INSTANCE_URL: Test
+          SBOM_SOURCE_STRATEGY: ${{ inputs.sbom-source-strategy }}
+          SBOM_SOURCE_DIRECTORY: ${{ inputs.sbom-source-directory }}
 #  log-inputs:
 #    runs-on: ubuntu-latest
 #    needs: checkout-repo
