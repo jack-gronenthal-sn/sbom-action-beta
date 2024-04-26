@@ -20,11 +20,27 @@ jobs:
   checkout-repositories:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the ServiceNow SBOM repository
+      - name: Checkout the client repository.
         uses: actions/checkout@v4
-      - run: ls
-      - run: echo "$GITHUB_WORKSPACE"
-      - run: ls "$GITHUB_WORKSPACE"
+        with:
+          path: client
+      - name: Checkout the ServiceNow SBOM repository.
+        uses: actions/checkout@v4
+        with:
+          repository: jack-gronenthal-sn/sbom-action-beta
+          path: service-now
+      - name: Verify Structure
+        run: |
+            echo WORKSPACE
+            ls "$GITHUB_WORKSPACE"
+            echo CLIENT
+            ls "$GITHUB_WORKSPACE/client"
+            echo SERVICE-NOW
+            ls "$GITHUB_WORKSPACE/service-now"
+
+#      - run: ls
+#      - run: echo "$GITHUB_WORKSPACE"
+#      - run: ls "$GITHUB_WORKSPACE"
 
 #    secrets:
 #      sn_instance_url:
