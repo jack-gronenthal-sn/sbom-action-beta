@@ -18,8 +18,12 @@ jobs:
   checkout-repo:
     runs-on: ubuntu-latest
     steps:
+      - name: Sanity check which repo has been checked out
+        run: echo "${{ github.repository }}"
       - name: Checkout the repository to the runner
         uses: actions/checkout@v4
+        with:
+          repository: jack-gronenthal-sn/sbom-action-beta
       - name: list
         run: ls -A
       - name: list action path
