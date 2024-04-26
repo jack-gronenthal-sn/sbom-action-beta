@@ -38,7 +38,7 @@ jobs:
         with:
           repository: ${{ inputs.sbom-repository-name }}
           ref: ${{ inputs.sbom-repository-ref }}
-      - run: chmod +x ./inputs.sh
+#      - run: chmod +x ./inputs.sh
       - name: Log Integration Inputs
         run: ./inputs.sh
         env:
