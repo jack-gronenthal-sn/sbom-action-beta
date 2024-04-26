@@ -12,7 +12,7 @@ if [ "$SBOM_SOURCE_STRATEGY" = "$REPOSITORY_SOURCE_STRATEGY" ]; then
     exit 2
   fi
     echo "::notice title=SBOM Source::Integration will select SBOM file from $SBOM_SOURCE_DIRECTORY"
-"
+
     echo "Hurray! $SBOM_SOURCE_DIRECTORY, $SBOM_SOURCE_STRATEGY"
 fi
 
