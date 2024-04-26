@@ -20,6 +20,7 @@ jobs:
   checkout-repositories:
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ inputs.sbom-path }}
       - name: Checkout the client repository.
         uses: actions/checkout@v4
         with:
