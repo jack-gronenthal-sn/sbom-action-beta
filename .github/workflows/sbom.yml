@@ -16,6 +16,14 @@ on:
         type: string
         required: false
 
+jobs:
+  checkout-repositories:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the ServiceNow SBOM repository
+        uses: actions/checkout@v4
+      - run: ls
+
 #    secrets:
 #      sn_instance_url:
 #        required: true
