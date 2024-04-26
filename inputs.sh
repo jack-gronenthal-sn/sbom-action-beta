@@ -12,11 +12,8 @@ if [ "$SBOM_SOURCE_STRATEGY" = "$REPOSITORY_SOURCE_STRATEGY" ]; then
     echo "::error title=Missing SBOM Source Directory::$ERR_MSG__MISSING_SBOM_DIRECTORY"
     exit 2
   fi
-    DIRECTORY_PATH="/$SBOM_SOURCE_DIRECTORY"
-    echo "$GITHUB_ACTION_PATH"
-    ls "$GITHUB_ACTION_PATH"
-    ls .
-    ls "$DIRECTORY_PATH"
+    realpath .
+    ls ..
     if ! [ -d "$DIRECTORY_PATH" ]; then
         echo "Target directory does not exist" # Add error
       else
