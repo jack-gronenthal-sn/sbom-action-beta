@@ -1,6 +1,7 @@
 #!/bin/sh -l
 
 REPOSITORY_SOURCE_STRATEGY="repository"
+
 ERR_MSG__MISSING_SBOM_DIRECTORY="When using the repository SBOM selection strategy, an SBOM source directory must be provided."
 
 echo "::group::SBOM Integration Inputs"
@@ -11,9 +12,13 @@ if [ "$SBOM_SOURCE_STRATEGY" = "$REPOSITORY_SOURCE_STRATEGY" ]; then
     echo "::error title=Missing SBOM Source Directory::$ERR_MSG__MISSING_SBOM_DIRECTORY"
     exit 2
   fi
-    echo "::notice title=SBOM Source::Integration will select SBOM file from $SBOM_SOURCE_DIRECTORY"
-
-    echo "Hurray! $SBOM_SOURCE_DIRECTORY, $SBOM_SOURCE_STRATEGY"
+    DIRECTORY_PATH="/$SBOM_SOURCE_DIRECTORY"
+    if ! [ -d "$DIRECTORY_PATH" ]; then
+        echo "Target directory does not exist" # Add error
+      else
+        echo "Target directory exists!"
+            echo "::notice title=Source Selection Strategy::Source Type: REPOSITORY | Source Path: $SBOM_SOURCE_DIRECTORY"
+    fi
 fi
 
 echo "::endgroup::"
