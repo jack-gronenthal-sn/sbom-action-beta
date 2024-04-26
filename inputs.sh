@@ -13,7 +13,8 @@ if [ "$SBOM_SOURCE_STRATEGY" = "$REPOSITORY_SOURCE_STRATEGY" ]; then
     exit 2
   fi
     realpath .
-    ls ..
+    ls -A ..
+    ls -A
     if ! [ -d "$DIRECTORY_PATH" ]; then
         echo "Target directory does not exist" # Add error
       else
