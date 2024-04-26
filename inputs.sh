@@ -12,6 +12,8 @@ if [ "$SBOM_SOURCE_STRATEGY" = "$REPOSITORY_SOURCE_STRATEGY" ]; then
     echo "::error title=Missing SBOM Source Directory::$ERR_MSG__MISSING_SBOM_DIRECTORY"
     exit 2
   fi
+
+    ls "$GITHUB_ACTION_PATH"
     realpath .
     ls -A ..
     ls -A
