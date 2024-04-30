@@ -73,12 +73,13 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - name: Post SBOM Document to ServiceNow Platform.
-        uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
-        with:
-          operation: upload
-        env:
-          sn-instance-url: ${{ secrets.sn-instance-url }}
+  cURL:
+    needs: checkout-repositories
+    uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
+    with:
+     operation: upload
+    secrets:
+     sn-instance-url: ${{ secrets.sn-instance-url }}
 
 #      - name: Checkout the ServiceNow SBOM Workflow.
 #        uses: actions/checkout@v4

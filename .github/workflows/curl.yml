@@ -10,6 +10,9 @@ on:
         - upload
         - status
         required: true
+    secrets:
+      sn-instance-url:
+        required: true
 
 jobs:
   upload:
