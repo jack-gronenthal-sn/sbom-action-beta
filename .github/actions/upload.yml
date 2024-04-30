@@ -1,0 +1,10 @@
+name: 'Upload SBOM to ServiceNow Vulnerability Response Application'
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo RUNNING ACTION

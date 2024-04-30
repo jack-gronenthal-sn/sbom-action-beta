@@ -31,12 +31,15 @@ jobs:
           path: client
           sparse-checkout: |
             ${{ inputs.sbom-path }}
-      - name: Checkout the ServiceNow SBOM repository.
+      - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - run: echo "${{ secrets.service-now-sbom-username }}"
+      - name: Upload SBOM to Service Now Instance.
+        uses: ./.github/actions/upload.yml
+
+#      - run: echo "${{ secrets.service-now-sbom-username }}"
 #      - name: Verify Structure
 #        run: |
 #            echo WORKSPACE
