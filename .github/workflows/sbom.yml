@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "::group::Inputs"
           echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
-          echo 'SBOM File Path: ${{ inputs.ssbom-path }}'
+          echo 'SBOM File Path: ${{ inputs.sbom-path }}'
           echo "::endgroup::"
 
   checkout-repositories:
