@@ -36,6 +36,9 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
+      - name: Sanity check files
+        run: |
+          ls ./service-now
       - name: Upload SBOM to Service Now Instance.
         uses: ./service-now/.github/actions/upload/action.yml
 
