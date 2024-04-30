@@ -35,12 +35,14 @@ jobs:
             ${{ inputs.sbom-path }}
       - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
-        with:
-          repository: jack-gronenthal-sn/sbom-action-beta
-          path: service-now
-      - name: Post the SBOM document to the ServiceNow Platform.
-        run: |
-          curl ${{ secrets.service-now-instance-url}}/api/snc/test_github_action -u ${{ secrets.service-now-sbom-username }}:${{ secrets.service-now-sbom-password }}
+      # - name: Checkout the ServiceNow SBOM Workflow.
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: jack-gronenthal-sn/sbom-action-beta
+      #     path: service-now
+      # - name: Post the SBOM document to the ServiceNow Platform.
+      #   run: |
+      #     curl ${{ secrets.service-now-instance-url}}/api/snc/test_github_action -u ${{ secrets.service-now-sbom-username }}:${{ secrets.service-now-sbom-password }}
 
 #      - run: echo "${{ secrets.service-now-sbom-username }}"
 #      - name: Verify Structure
