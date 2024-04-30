@@ -50,6 +50,13 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    steps:
+      - name: Inputs
+        run: |
+          echo "::group::Inputs"
+          echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
+          echo 'SBOM File Path: ${{ inputs.ssbom-path }}'
+          echo "::endgroup::"
 
   checkout-repositories:
     runs-on: ubuntu-latest
