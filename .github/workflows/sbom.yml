@@ -41,7 +41,7 @@ jobs:
           ls -A ./service-now/.github
           ls -A ./service-now/.github/actions/upload
           echo CHECK DIRECTORY
-          cat ./service-now/.github/actions/upload
+          cat ./service-now/.github/actions/upload/action.yml
 #      - name: Upload SBOM to Service Now Instance.
 #        uses: ./service-now/.github/actions/upload/action.yml
 
