@@ -36,8 +36,9 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - name: Upload SBOM to Service Now Instance.
-        uses: ./service-now/.github/actions/upload/action.yml
+      - name: cURL the ServiceNow Platform with SBOM Document.
+        run: |
+          curl curl https://empjack.service-now.com/api/snc/test_github_action -u ${{ secrets.service-now-sbom-username }}:${{ secrets.service-now-sbom-password }}
 
 #      - run: echo "${{ secrets.service-now-sbom-username }}"
 #      - name: Verify Structure
