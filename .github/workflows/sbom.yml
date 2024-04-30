@@ -1,6 +1,7 @@
 name: ServiceNow SBOM Integration
 run-name: ${{ github.actor }} is uploading a SBOM to ServiceNow.
 on:
+  # Executed when an action is invoked via GitHub
   workflow_call:
     inputs:
       sbom-repository-name:
@@ -16,12 +17,14 @@ on:
         type: string
         required: false
     secrets:
-      service-now-sbom-username:
+      sn-sbom-username:
         required: true
-      service-now-sbom-password:
+      sn-sbom-password:
         required: true
-      service-now-instance-url:
+      sn-instance-url:
         required: true
+
+  # Invoked via a REST API
   workflow_dispatch:
     inputs:
       sbom-repository-name:
@@ -44,7 +47,6 @@ on:
       service-now-instance-url:
         required: true
 
-
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -64,10 +66,10 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - name: Post SBOM Document to ServiceNow Platform.
-        uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
-        with:
-          operation
+#      - name: Post SBOM Document to ServiceNow Platform.
+#        uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
+#        with:
+#          operation:
 
 #      - name: Checkout the ServiceNow SBOM Workflow.
 #        uses: actions/checkout@v4
@@ -91,17 +93,6 @@ jobs:
 #            echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
 #            cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
 
-#      - run: ls
-#      - run: echo "$GITHUB_WORKSPACE"
-#      - run: ls "$GITHUB_WORKSPACE"
-
-#    secrets:
-#      sn_instance_url:
-#        required: true
-#      sn_orchestration_tool_id:
-#        required: false
-#      sn_devops_integration_token:
-#        required: false
 
 #jobs:
 #  checkout-repo:
