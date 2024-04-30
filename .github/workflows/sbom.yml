@@ -34,7 +34,7 @@ jobs:
           sparse-checkout: |
             ${{ inputs.sbom-path }}
       - name: Checkout the ServiceNow SBOM Workflow.
-        uses: actions/checkout
+        uses: actions/checkout@v4
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
