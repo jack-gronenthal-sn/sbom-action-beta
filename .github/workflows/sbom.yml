@@ -40,8 +40,10 @@ jobs:
         run: |
           ls -A ./service-now/.github
           ls -A ./service-now/.github/actions/upload
-      - name: Upload SBOM to Service Now Instance.
-        uses: ./service-now/.github/actions/upload/action.yml
+          echo CHECK DIRECTORY
+          cat ./service-now/.github/actions/upload
+#      - name: Upload SBOM to Service Now Instance.
+#        uses: ./service-now/.github/actions/upload/action.yml
 
 #      - run: echo "${{ secrets.service-now-sbom-username }}"
 #      - name: Verify Structure
