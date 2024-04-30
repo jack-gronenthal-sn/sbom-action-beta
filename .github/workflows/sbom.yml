@@ -38,7 +38,7 @@ jobs:
           path: service-now
       - name: cURL the ServiceNow Platform with SBOM Document.
         run: |
-          curl curl https://empjack.service-now.com/api/snc/test_github_action -u ${{ secrets.service-now-sbom-username }}:${{ secrets.service-now-sbom-password }}
+          curl https://empjack.service-now.com/api/snc/test_github_action -u ${{ secrets.service-now-sbom-username }}:${{ secrets.service-now-sbom-password }}
 
 #      - run: echo "${{ secrets.service-now-sbom-username }}"
 #      - name: Verify Structure
