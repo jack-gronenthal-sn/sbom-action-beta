@@ -1,4 +1,4 @@
-name: servicenow-sbom
+name: ServiceNow SBOM Integration
 run-name: ${{ github.actor }} is uploading a SBOM to ServiceNow.
 on:
   workflow_call:
@@ -23,7 +23,6 @@ on:
       service-now-instance-url:
         required: true
 
-
 jobs:
   checkout-repositories:
     runs-on: ubuntu-latest
@@ -39,7 +38,7 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - name: cURL the ServiceNow Platform with SBOM Document.
+      - name: Post the SBOM document to the ServiceNow Platform.
         run: |
           curl ${{ secrets.service-now-instance-url}}/api/snc/test_github_action -u ${{ secrets.service-now-sbom-username }}:${{ secrets.service-now-sbom-password }}
 
