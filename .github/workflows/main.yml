@@ -1,0 +1,26 @@
+name: cURL SBOM Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        description: Operation
+        options: 
+        - upload
+        - status
+        required: true
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.operation }} == 'upload'
+    steps:
+    - name: Upload
+      run: echo "Detected an upload operation -> ${{ inputs.operation }}"
+  status:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.operation }} == 'status'
+    steps:
+    - name: Status
+      run: echo "Detected a status operation -> ${{ inputs.operation }}"
