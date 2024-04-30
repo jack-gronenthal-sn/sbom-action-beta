@@ -15,12 +15,16 @@ on:
         description: The branch, tag, or SHA256 hash to checkout.
         type: string
         required: false
+    secrets:
+      service-now-sbom-username:
+        required: true
+      service-now-sbom-password:
+        required: true
 
 jobs:
   checkout-repositories:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ inputs.sbom-path }}
       - name: Checkout the client repository.
         uses: actions/checkout@v4
         with:
@@ -32,16 +36,17 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - name: Verify Structure
-        run: |
-            echo WORKSPACE
-            ls "$GITHUB_WORKSPACE"
-            echo CLIENT
-            ls "$GITHUB_WORKSPACE/client"
-            echo SERVICE-NOW
-            ls "$GITHUB_WORKSPACE/service-now"
-            echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-            cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
+      - run: echo "${{ secrets.service-now-sbom-username }}"
+#      - name: Verify Structure
+#        run: |
+#            echo WORKSPACE
+#            ls "$GITHUB_WORKSPACE"
+#            echo CLIENT
+#            ls "$GITHUB_WORKSPACE/client"
+#            echo SERVICE-NOW
+#            ls "$GITHUB_WORKSPACE/service-now"
+#            echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+#            cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
 
 #      - run: ls
 #      - run: echo "$GITHUB_WORKSPACE"
