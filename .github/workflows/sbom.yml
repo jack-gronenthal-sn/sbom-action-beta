@@ -37,7 +37,7 @@ jobs:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
       - name: Upload SBOM to Service Now Instance.
-        uses: $GITHUB_WORKSPACE/service-now/.github/actions/upload.yml
+        uses: "$GITHUB_WORKSPACE/service-now/.github/actions/upload.yml"
 
 #      - run: echo "${{ secrets.service-now-sbom-username }}"
 #      - name: Verify Structure
