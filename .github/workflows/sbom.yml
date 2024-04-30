@@ -40,6 +40,7 @@ jobs:
             ls "$GITHUB_WORKSPACE/client"
             echo SERVICE-NOW
             ls "$GITHUB_WORKSPACE/service-now"
+            echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
             cat "$GITHUB_WORKSPACE/${{ inputs.sbom-path }}"
 
 #      - run: ls
