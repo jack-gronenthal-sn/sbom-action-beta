@@ -13,6 +13,16 @@ on:
     secrets:
       sn-instance-url:
         required: true
+  workflow_call:
+    inputs:
+      operation:
+        type: string
+        required: true
+        description: The kind of operation to perform
+    secrets:
+      sn-instance-url:
+        required: true
+
 
 jobs:
   upload:
