@@ -79,7 +79,10 @@ jobs:
     with:
      operation: upload
     secrets:
-     sn-instance-url: ${{ secrets.sn-instance-url }}
+     sn-instance-url:   ${{ secrets.sn-instance-url }}
+     sn-sbom-username:  ${{ secrets.sn-sbom-username }}
+     sn-sbom-password:  ${{ secrets.sn-sbom-password }}
+
 
 #      - name: Checkout the ServiceNow SBOM Workflow.
 #        uses: actions/checkout@v4
