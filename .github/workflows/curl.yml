@@ -22,7 +22,10 @@ on:
     secrets:
       sn-instance-url:
         required: true
-
+      sn-sbom-username:
+        required: true
+      sn-sbom-password:
+        required: true
 
 jobs:
   upload:
@@ -30,7 +33,9 @@ jobs:
     if: ${{ inputs.operation }} == 'upload'
     steps:
     - name: Upload
-      run: echo "Detected an upload operation -> ${{ inputs.operation }}, ${{ env.sn-instance-url }}"
+      run: echo "Detected an upload operation -> ${{ inputs.operation }}"
+    - name: Perform CURL to Vulnerability Response Application
+      run: curl ${{ secrets.sn-instance-url}}/api/snc/test_github_action -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
   status:
     runs-on: ubuntu-latest
     if: ${{ inputs.operation }} == 'status'
