@@ -41,9 +41,8 @@ jobs:
     - name: Perform CURL to Vulnerability Response Application
       run: |
         curl -i \
-        -H "Accept: application/json"
-        --request POST \
-        --data '${{ inputs.document }}' \
+        -H "Accept: application/json" \
+        -d '${{ inputs.document }}' \
         ${{ secrets.sn-instance-url}}/api/snc/test_github_action -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
 
   status:
