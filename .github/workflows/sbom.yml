@@ -84,9 +84,7 @@ jobs:
         id: sbom-document-source
         run: |
           if [ "${{ inputs.sbom-source}}" == "" ]; then
-              ls -A $GITHUB_WORKSPACE
-              cat $GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}
-              echo "sbom_document=$(cat $GITHUB_WORKSPACE/client/${{ inputs.sbom-path }})" >> "$GITHUB_OUTPUT"
+              echo "sbom_document=$(cat '$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }})'" >> "$GITHUB_OUTPUT"
           fi
 
 #  sbom-source:
