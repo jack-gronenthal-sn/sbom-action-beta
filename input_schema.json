@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "jack-gronenthal-sn/sbom-action-beta/input.schema.json",
   "title": "Input",
   "description": "The schema of the input object accepted by the Vulnerability Response GitHub Action.",
