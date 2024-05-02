@@ -16,5 +16,5 @@ jobs:
         with:
           node-version: '20.x'
       - run: cd $GITHUB_WORKSPACE/service-now/
-      - run: npm ci
+      - run: npm install
       - run: npm run sanity
