@@ -93,7 +93,7 @@ jobs:
 
 
   cURL:
-    needs: sbom-source
+    needs: checkout-repositories
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
     with:
      operation: upload
