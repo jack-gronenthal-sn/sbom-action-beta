@@ -1,6 +1,6 @@
 name: Validate Input Arguments
 
-on: [workflow_dispatch, push]
+on: [workflow_dispatch, workflow_call, push]
 
 jobs:
   build:
