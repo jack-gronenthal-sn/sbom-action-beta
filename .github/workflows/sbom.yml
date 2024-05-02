@@ -61,7 +61,7 @@ jobs:
           echo "::group::Inputs"
           
           if [ "${{ inputs.sbom-source}}" == "" ]; then
-            echo 'SBOM Source is empty, indicative of a PUSH event.'
+            cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
           fi
           
           echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
