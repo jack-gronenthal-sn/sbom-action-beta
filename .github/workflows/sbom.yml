@@ -79,16 +79,18 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-
-  sbom-source:
-    runs-on: ubuntu-latest
-    needs: checkout-repositories
-    steps:
       - name: Determine how SBOM is being provided.
         run: |
           if [ "${{ inputs.sbom-source}}" == "" ]; then
+
              cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
           fi
+
+#  sbom-source:
+#    runs-on: ubuntu-latest
+#    needs: checkout-repositories
+#    steps:
+
 
   cURL:
     needs: sbom-source
