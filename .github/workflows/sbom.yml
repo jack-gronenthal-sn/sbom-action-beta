@@ -16,6 +16,10 @@ on:
         description: The branch, tag, or SHA256 hash to checkout.
         type: string
         required: false
+      event:
+        description: The event payload that triggered the action.
+        type: string
+        required: false
     secrets:
       sn-sbom-username:
         required: true
