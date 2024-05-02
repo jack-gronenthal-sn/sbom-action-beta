@@ -40,12 +40,11 @@ jobs:
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - name: Perform CURL to Vulnerability Response Application
       run: |
-        echo 'JSON -> ${{ inputs.document }}'
-#        curl -i \
-#        -H 'Content-Type: application/json' \
-#        -d '${{ inputs.document }}' \
-#        ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-#        -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
+        curl -i \
+        -H 'Content-Type: application/json' \
+        -d '${{ inputs.document }}' \
+        ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+        -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
 
   status:
     runs-on: ubuntu-latest
