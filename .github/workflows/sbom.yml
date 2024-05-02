@@ -77,6 +77,10 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ inputs.event }}
   cURL:
     needs: checkout-repositories
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
