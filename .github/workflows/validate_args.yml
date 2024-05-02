@@ -7,10 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: jack-gronenthal-sn/sbom-action-beta
+          path: service-now
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - run: ls -A .
+      - run: ls -A $GITHUB_WORKSPACE/service-now/
 #      - run: npm ci
 #      - run: npm run sanity
