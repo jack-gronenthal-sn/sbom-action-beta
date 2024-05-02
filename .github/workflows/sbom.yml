@@ -59,17 +59,9 @@ jobs:
       - name: Inputs
         run: |
           echo "::group::Inputs"
-          
-          if [ "${{ inputs.sbom-source}}" == "" ]; then
-            cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
-          fi
-          
           echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
           echo 'SBOM File Path: ${{ inputs.sbom-path }}'
-          echo 'SBOM Source
-          
-          # Source the SBOM
-          
+          echo 'SBOM Source          
           echo "::endgroup::"
 
   checkout-repositories:
@@ -88,8 +80,18 @@ jobs:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
 
-  cURL:
+  sbom-source:
+    runs-on: ubuntu-latest
     needs: checkout-repositories
+    steps:
+      - name: Determine how SBOM is being provided.
+        run: |
+          if [ "${{ inputs.sbom-source}}" == "" ]; then
+             cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
+          fi
+
+  cURL:
+    needs: sbom-source
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
     with:
      operation: upload
