@@ -90,14 +90,17 @@ jobs:
 #        run: |
 #          ls $GITHUB_WORKSPACE/service-now
 #          cat $GITHUB_WORKSPACE/service-now/input_schema.json
-      - name: Validate input arguments.
-        uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/validate_args.yml@json-input
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
           if [ "${{ inputs.sbom-source}}" == "" ]; then
               echo sbom_document=$(cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}") >> "$GITHUB_OUTPUT"
           fi
+
+  validate-inputs:
+    needs: checkout-repositories
+    uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/validate_args.yml@json-input
+
 
 #  sbom-source:
 #    runs-on: ubuntu-latest
@@ -111,7 +114,7 @@ jobs:
 #      - run: echo 'sanity -> ${{ needs.checkout-repositories.outputs.document }}'
 
   cURL:
-    needs: checkout-repositories
+    needs: validate-inputs
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
     with:
      operation: upload
