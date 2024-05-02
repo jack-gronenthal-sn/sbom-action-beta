@@ -41,7 +41,7 @@ jobs:
     - name: Perform CURL to Vulnerability Response Application
       run: |
         curl -i \
-        -H "Accept: application/json" \
+        -H 'Content-Type: application/json' \
         -d '${{ inputs.document }}' \
         ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
         -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
