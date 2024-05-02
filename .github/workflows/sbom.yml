@@ -96,6 +96,8 @@ jobs:
         env:
           INPUT_SCHEMA: $GITHUB_WORKSPACE/service-now/input_schema.json
           INPUT_JSONS: ${{ inputs.args }}
+        with:
+          context: .
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
