@@ -62,6 +62,7 @@ jobs:
       - name: Inputs
         run: |
           echo "::group::Inputs"
+          echo 'Arguments: ${{ inputs.args }}'
           echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
           echo 'SBOM File Path: ${{ inputs.sbom-path }}'
           echo 'SBOM Source'          
