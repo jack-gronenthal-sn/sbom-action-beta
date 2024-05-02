@@ -86,18 +86,12 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-      - name: check where files were placed
-        run: |
-          ls $GITHUB_WORKSPACE/service-now
-          cat $GITHUB_WORKSPACE/service-now/input_schema.json
-
+#      - name: check where files were placed
+#        run: |
+#          ls $GITHUB_WORKSPACE/service-now
+#          cat $GITHUB_WORKSPACE/service-now/input_schema.json
       - name: Validate input arguments.
-        uses: docker://orrosenblatt/validate-json-action:latest
-        env:
-          INPUT_SCHEMA: $GITHUB_WORKSPACE/service-now/input_schema.json
-          INPUT_JSONS: ${{ inputs.args }}
-        with:
-          context: .
+        uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/validate_args.yml@json-input
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
