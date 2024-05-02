@@ -85,6 +85,7 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
+          ref: json-input
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
