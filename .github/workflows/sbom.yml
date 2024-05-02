@@ -16,10 +16,11 @@ on:
         description: The branch, tag, or SHA256 hash to checkout.
         type: string
         required: false
-      event:
-        description: The event payload that triggered the action.
+      sbom-source:
+        description: The source from which the SBOM will be read.
         type: string
-        required: false
+        required: true
+
     secrets:
       sn-sbom-username:
         required: true
@@ -58,8 +59,17 @@ jobs:
       - name: Inputs
         run: |
           echo "::group::Inputs"
+          
+          if [ "${{ inputs.sbom-source}}" == "" ]; then
+            echo 'SBOM Source is empty, indicative of a PUSH event.'
+          fi
+          
           echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
           echo 'SBOM File Path: ${{ inputs.sbom-path }}'
+          echo 'SBOM Source
+          
+          # Source the SBOM
+          
           echo "::endgroup::"
 
   checkout-repositories:
@@ -77,16 +87,13 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-  echo:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo '${{ inputs.event }}'
 
   cURL:
     needs: checkout-repositories
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
     with:
      operation: upload
+
     secrets:
      sn-instance-url:   ${{ secrets.sn-instance-url }}
      sn-sbom-username:  ${{ secrets.sn-sbom-username }}
