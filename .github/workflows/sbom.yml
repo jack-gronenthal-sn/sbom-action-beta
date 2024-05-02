@@ -20,7 +20,6 @@ on:
         description: The source from which the SBOM will be read.
         type: string
         required: true
-
     secrets:
       sn-sbom-username:
         required: true
@@ -85,7 +84,9 @@ jobs:
         id: sbom-document-source
         run: |
           if [ "${{ inputs.sbom-source}}" == "" ]; then
-             echo "sbom_document=$(cat '$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}')" >> "$GITHUB_OUTPUT"
+              ls -A $GITHUB_WORKSPACE
+              cat $GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}
+              echo "sbom_document=$(cat $GITHUB_WORKSPACE/client/${{ inputs.sbom-path }})" >> "$GITHUB_OUTPUT"
           fi
 
 #  sbom-source:
