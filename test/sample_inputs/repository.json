@@ -1,45 +1,8 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "jack-gronenthal-sn/sbom-action-beta/input.schema.json",
-  "title": "Input",
-  "description": "The schema of the input object accepted by the Vulnerability Response GitHub Action.",
-  "type": "object",
-  "properties": {
-    "provider": {
-      "description": "The mechanism that provides the BOM document.",
-      "type": "object",
-      "properties": {
-        "repository": {
-          "type": "object",
-          "properties": {
-            "repositoryName": {
-              "type": "string",
-              "description": "The fully qualified name of the repository from which the BOM document is sourced."
-            },
-            "path": {
-              "type": "string",
-              "description": "The path from repository root to BOM document."
-            },
-            "ref": {
-              "type":  "string",
-              "description": "The branch, hash, or tag the Action will checkout. Defaults to main branch."
-            }
-          },
-          "required": [ "repositoryName", "path" ]
-        },
-        "payload": {
-          "type": "object"
-        },
-        "remote": {
-          "type": "object"
-        }
-      },
-      "oneOf": [
-        { "type": "object", "required": ["repository"] },
-        { "type": "object", "required": ["remote"] },
-        { "type": "object", "required": ["payload"] }
-      ]
+  "provider": {
+    "repository": {
+      "repositoryName": "jack-gronenthal-sn/github-action-consumer",
+      "path": "sboms/sample_sbom.txt"
     }
-  },
-  "required": [ "provider" ]
+  }
 }
