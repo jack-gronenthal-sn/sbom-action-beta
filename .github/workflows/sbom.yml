@@ -82,8 +82,7 @@ jobs:
       - name: Determine how SBOM is being provided.
         run: |
           if [ "${{ inputs.sbom-source}}" == "" ]; then
-
-             cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
+             echo "SBOM_DOCUMENT=$(cat '$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}')" >> $GITHUB_ENV
           fi
 
 #  sbom-source:
@@ -97,7 +96,7 @@ jobs:
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
     with:
      operation: upload
-
+     document: $SBOM_DOCUMENT
     secrets:
      sn-instance-url:   ${{ secrets.sn-instance-url }}
      sn-sbom-username:  ${{ secrets.sn-sbom-username }}
