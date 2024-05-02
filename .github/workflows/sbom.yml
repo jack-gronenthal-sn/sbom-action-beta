@@ -4,6 +4,10 @@ on:
   # Executed when an action is invoked via GitHub
   workflow_call:
     inputs:
+      args:
+        description: A JSON object that captures the arguments for execution.
+        required: false
+        type: string
       sbom-repository-name:
         description: The repository that holds the SBOM document.
         required: true
