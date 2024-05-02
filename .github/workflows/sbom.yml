@@ -61,7 +61,7 @@ jobs:
           echo "::group::Inputs"
           echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
           echo 'SBOM File Path: ${{ inputs.sbom-path }}'
-          echo 'SBOM Source          
+          echo 'SBOM Source'          
           echo "::endgroup::"
 
   checkout-repositories:
