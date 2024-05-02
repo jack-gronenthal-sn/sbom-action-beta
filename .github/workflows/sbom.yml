@@ -56,7 +56,18 @@ on:
         required: true
 
 jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Input Arguments
+        uses: docker://orrosenblatt/validate-json-action:latest
+        env:
+          INPUT_SCHEMA: ./input_schema.json
+          INPUT_JSONS: ${{ inputs.args }}
+
   setup:
+    needs: validation
     runs-on: ubuntu-latest
     steps:
       - name: Inputs
@@ -85,7 +96,6 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-          ref: json-input
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "jack-gronenthal-sn/sbom-action-beta/input.schema.json",
   "title": "Input",
   "description": "The schema of the input object accepted by the Vulnerability Response GitHub Action.",
@@ -20,11 +21,14 @@
               "description": "The path from repository root to BOM document."
             },
             "ref": {
-              "type":  "string",
+              "type": "string",
               "description": "The branch, hash, or tag the Action will checkout. Defaults to main branch."
             }
           },
-          "required": [ "repositoryName", "path" ]
+          "required": [
+            "repositoryName",
+            "path"
+          ]
         },
         "payload": {
           "type": "object"
@@ -33,12 +37,53 @@
           "type": "object"
         }
       },
+      "required": [
+        "type"
+      ],
       "oneOf": [
-        { "type": "object", "required": ["repository"] },
-        { "type": "object", "required": ["remote"] },
-        { "type": "object", "required": ["payload"] }
+        {
+          "type": "object",
+          "required": [
+            "repository"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "repository"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "remote"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "remote"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "payload"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "payload"
+              ]
+            }
+          }
+        }
       ]
     }
   },
-  "required": [ "provider" ]
+  "required": [
+    "provider"
+  ]
 }
