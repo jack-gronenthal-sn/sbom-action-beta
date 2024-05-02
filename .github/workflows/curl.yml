@@ -43,7 +43,8 @@ jobs:
         curl -i \
         -H "Accept: application/json" \
         -d '${{ inputs.document }}' \
-        ${{ secrets.sn-instance-url}}/api/snc/test_github_action -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
+        ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+        -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}
 
   status:
     runs-on: ubuntu-latest
