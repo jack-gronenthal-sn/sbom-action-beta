@@ -122,6 +122,8 @@ jobs:
         id: fetch-sbom-document
         if: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}
         run: |
+          echo sanity check
+          cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}"
           echo document=$(cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}") >> "$GITHUB_OUTPUT"
 
   cURL:
