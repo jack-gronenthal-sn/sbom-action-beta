@@ -145,7 +145,7 @@ jobs:
             fi
           
             if ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'payload' }}; then
-              echo  ${{ steps.report-validation-success-and-set-arguments.outputs.document }}
+              echo  '${{ steps.report-validation-success-and-set-arguments.outputs.document }}'
             fi
           
             echo EOF
