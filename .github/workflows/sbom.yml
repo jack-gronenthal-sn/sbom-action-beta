@@ -97,12 +97,22 @@ jobs:
           echo "✅ Runtime Arguments Validated Successfully"
           provider_type=$(echo '${{ inputs.args }}' | jq -r '.provider.type')
           
+          # Provider Type: Repository
+          if [ "$provider_type" == "repository" ]; then
+            repository_name==$(echo '${{ inputs.args }}' | jq -r '.provider.repository.repositoryName')
+            path==$(echo '${{ inputs.args }}' | jq -r '.provider.repository.path')
+          fi
+          
           # Set the Outputs
           echo "provider_type=$provider_type" >> $GITHUB_OUTPUT
+          echo "repository_name=$repository_name" >> $GITHUB_OUTPUT
+          echo "path=$path" >> $GITHUB_OUTPUT
           
           # Log the Arguments
           echo "::group::Arguments"
           echo Provider Type: $provider_type
+          echo Repository Name: $repository_name
+          echo Path: $path
           echo "::endgroup::"  
           
                   
