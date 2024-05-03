@@ -77,7 +77,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: latest
-      - name: Install JSON Schema Validator
+      - name: Validate Runtime Arguments
+        if: ${{ always() }}
         continue-on-error: true
         run: |
           npm install -g ajv-cli
