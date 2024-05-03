@@ -78,6 +78,7 @@ jobs:
         with:
           node-version: latest
       - name: Install JSON Schema Validator
+        continue-on-error: true
         run: |
           npm install -g ajv-cli
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
