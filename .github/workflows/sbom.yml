@@ -67,45 +67,46 @@ jobs:
           path: client
           sparse-checkout: |
             ${{ inputs.sbom-path }}
+
       - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
           ref: json-input
+
       - name: Checkout Node.js
         uses: actions/setup-node@v4
         with:
           node-version: latest
+
+      # Validate runtime arguments to the SBOM GitHub Action, not to the API itself.
       - name: Validate Runtime Arguments
-        if: ${{ always() }}
-        continue-on-error: true
+        id: validate-runtime-args
         run: |
           npm install -g ajv-cli
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
-          ajv test --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid
-          validation_status=$?
           
-          echo "::group::Runtime Arguments Validation"
-          echo "Provided runtime arguments:"
-          cat $GITHUB_WORKSPACE/service-now/_args.json
+          mkdir $GITHUB_WORKSPACE/service-now/logs
+          ajv test --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid 2> $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log ; \
+            sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log > $GITHUB_WORKSPACE/service-now/logs/error_message
+
+      - name: Report Validation Failures
+        id: report-validation-failures
+        if: ${{ steps.validate-runtime-args.outcome == 'failure' }}
+        run: |
+          echo "::group::Invalid Input Arguments"
           
-          echo "validation status -> $validation_status"
-          echo "boolean check -> $((validation_status==0))"
+          error_message=$(cat $GITHUB_WORKSPACE/service-now/logs/error_message)
+          echo "::error title=❌ Runtime Arguments Failed Validation::$error_message" # Consider if the single quote will break this
+          cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
+          echo "::endgroup::"  
           
-          if [ $validation_status -eq 0 ]; then
-            echo "✅ Runtime Arguments Validated Successfully"
-            echo "::endgroup::"  
-          else
-            ajv --spec=draft2020 -s ./input_schema.json -d ./test/sample_inputs/repository.json >> validation_error_log 2>&1
-            error_message=$(ajv --spec=draft2020 -s ./input_schema.json -d ./test/sample_inputs/repository.json 2> .ajv_error_log ; \
-              sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" .ajv_error_log > error_message ; \
-              cat error_message)
-            echo "::error title=❌ Runtime Arguments Failed Validation::$error_message" # Consider if the single quote will break this
-            cat .ajv_error_log
-            echo "::endgroup::"  
-            exit 1
-          fi
+          exit 1
+      - name: Report Validation Success
+        id: report-validation-success
+        if: ${{ steps.validate-runtime-args.output == 'success' }}
+        run: echo "✅ Runtime Arguments Validated Successfully"
 
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
