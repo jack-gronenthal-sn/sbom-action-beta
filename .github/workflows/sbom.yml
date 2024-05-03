@@ -86,32 +86,16 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-#      - name: check where files were placed
-#        run: |
-#          ls $GITHUB_WORKSPACE/service-now
-#          cat $GITHUB_WORKSPACE/service-now/input_schema.json
+      - name: Checkout Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
           if [ "${{ inputs.sbom-source}}" == "" ]; then
               echo sbom_document=$(cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}") >> "$GITHUB_OUTPUT"
           fi
-
-  validate-inputs:
-    needs: checkout-repositories
-    uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/validate_args.yml@json-input
-
-
-#  sbom-source:
-#    runs-on: ubuntu-latest
-#    needs: checkout-repositories
-#    steps:
-
-#  sanity:
-#    needs: checkout-repositories
-#    runs-on: ubuntu-latest
-#    steps:
-#      - run: echo 'sanity -> ${{ needs.checkout-repositories.outputs.document }}'
 
   cURL:
     needs: validate-inputs
