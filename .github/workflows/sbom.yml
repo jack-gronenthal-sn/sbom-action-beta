@@ -106,7 +106,7 @@ jobs:
           exit 1
       - name: Report Validation Success
         id: report-validation-success
-        if: ${{ steps.validate-runtime-args.output == 'success' }}
+        if: ${{ steps.validate-runtime-args.outcome == 'success' }}
         run: echo "✅ Runtime Arguments Validated Successfully"
 
       - name: Determine how SBOM is being provided.
