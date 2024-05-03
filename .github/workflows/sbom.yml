@@ -139,15 +139,17 @@ jobs:
         id: fetch-sbom-document
         if: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}
         run: |
-          echo sanity check
           {
             echo 'document<<EOF'
-            cat $GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}
+            if [ ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}  ]; then
+              cat $GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}
+            fi
+            if [ ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'payload' }} ]; then
+              echo  ${{ steps.report-validation-success-and-set-arguments.outputs.document }}
+            fi
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
-      - name: sanity
-        run: echo '${{ steps.fetch-sbom-document.outputs.document }}'
 
   cURL:
     needs: checkout-repositories
