@@ -93,12 +93,9 @@ jobs:
       - name: Install JSON Schema Validator
         run: |
           npm install -g ajv-cli
-          echo ${{ inputs.args }} >> $GITHUB_WORKSPACE/service-now/_args.json
-          echo ARGS SAVED TO JSON
+          echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
           cat $GITHUB_WORKSPACE/service-now/_args.json
-          echo INPUT SCHEMA
-          cat $GITHUB_WORKSPACE/service-now/input_schema.json
-          ajv --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema -d $GITHUB_WORKSPACE/service-now/_args.json
+          ajv --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
