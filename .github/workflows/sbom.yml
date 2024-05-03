@@ -90,28 +90,36 @@ jobs:
           echo "✅ Runtime Arguments Validated Successfully"
           provider_type=$(echo '${{ inputs.args }}' | jq -r '.provider.type')
           
+          echo "::group::Arguments"
+          echo "provider_type=$provider_type" >> $GITHUB_OUTPUT
+          
           # Provider Type: Repository
           if [ "$provider_type" == "repository" ]; then
             repository_name=$(echo '${{ inputs.args }}' | jq -r '.provider.repository.repositoryName')
             path=$(echo '${{ inputs.args }}' | jq -r '.provider.repository.path')
+          
+            # Set the Outputs
+            echo "repository_name=$repository_name" >> $GITHUB_OUTPUT
+            echo "path=$path" >> $GITHUB_OUTPUT
+          
+            echo Provider Type: $provider_type
+            echo Repository Name: $repository_name
+            echo Path: $path
           fi
           
           # Provider Type: Payload
           if [ "$provider_type" == "payload" ]; then
             file_type=$(echo '${{ inputs.args }}' | jq -r '.provider.payload.type')
             document=$(echo '${{ inputs.args }}' | jq -r '.provider.payload.document')
+          
+            # Set the Outputs
+            echo "file_type=$file_type" >> $GITHUB_OUTPUT
+            echo "document=$document" >> $GITHUB_OUTPUT
+          
+            echo File Type: $file_type
+            echo BOM: $document            
           fi
-          
-          # Set the Outputs
-          echo "provider_type=$provider_type" >> $GITHUB_OUTPUT
-          echo "repository_name=$repository_name" >> $GITHUB_OUTPUT
-          echo "path=$path" >> $GITHUB_OUTPUT
-          
-          # Log the Arguments
-          echo "::group::Arguments"
-          echo Provider Type: $provider_type
-          echo Repository Name: $repository_name
-          echo Path: $path
+
           echo "::endgroup::"  
 
       - name: Checkout the client repository.
