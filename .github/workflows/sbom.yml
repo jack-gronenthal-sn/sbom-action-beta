@@ -114,7 +114,11 @@ jobs:
           
             # Set the Outputs
             echo "file_type=$file_type" >> $GITHUB_OUTPUT
-            echo "document=$document" >> $GITHUB_OUTPUT
+            {
+              echo 'document<<EOF'
+              echo '${{ inputs.args }}' | jq -r '.provider.payload.document'
+              echo EOF
+            } >> "$GITHUB_OUTPUT"
           
             echo File Type: $file_type
             echo BOM: $document            
