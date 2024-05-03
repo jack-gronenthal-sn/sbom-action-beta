@@ -90,22 +90,15 @@ jobs:
           
           mkdir $GITHUB_WORKSPACE/service-now/logs
           ajv test --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid 2> $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log ; \
-            sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log > $GITHUB_WORKSPACE/service-now/logs/error_message
+            sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
 
       - name: Report Validation Failures
         id: report-validation-failures
         if: ${{ steps.validate-runtime-args.outcome == 'failure' }}
         run: |
-          
-          ls -A $GITHUB_WORKSPACE/service-now
-          ls -A $GITHUB_WORKSPACE/service-now/logs
-          cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
-          echo ERROR MESSAGE
-          sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
-          
           echo "::group::Invalid Input Arguments"
           
-          error_message=$(cat $GITHUB_WORKSPACE/service-now/logs/error_message)
+          error_message=$(sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log)
           echo "::error title=❌ Runtime Arguments Failed Validation::$error_message" # Consider if the single quote will break this
           cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
           echo "::endgroup::"  
