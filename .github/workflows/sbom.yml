@@ -46,13 +46,6 @@ jobs:
       document: ${{ steps.sbom-document-source.outputs.sbom_document }}
       provider_type: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type }}
     steps:
-      - name: Checkout the client repository.
-        uses: actions/checkout@v4
-        with:
-          path: client
-          sparse-checkout: |
-            ${{ inputs.sbom-path }}
-
       - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
         with:
@@ -99,8 +92,8 @@ jobs:
           
           # Provider Type: Repository
           if [ "$provider_type" == "repository" ]; then
-            repository_name==$(echo '${{ inputs.args }}' | jq -r '.provider.repository.repositoryName')
-            path==$(echo '${{ inputs.args }}' | jq -r '.provider.repository.path')
+            repository_name=$(echo '${{ inputs.args }}' | jq -r '.provider.repository.repositoryName')
+            path=$(echo '${{ inputs.args }}' | jq -r '.provider.repository.path')
           fi
           
           # Set the Outputs
@@ -114,15 +107,22 @@ jobs:
           echo Repository Name: $repository_name
           echo Path: $path
           echo "::endgroup::"  
-          
-                  
 
-      - name: Determine how SBOM is being provided.
-        id: sbom-document-source
+
+      - name: Checkout the client repository.
+        uses: actions/checkout@v4
+        if: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}
+        with:
+          repository: ${{ steps.report-validation-success-and-set-arguments.outputs.repository_name }}
+          path: client
+          sparse-checkout: |
+            ${{ steps.report-validation-success-and-set-arguments.outputs.path }}
+
+      - name: Fetch SBOM Document.
+        id: fetch-sbom-document
+        if: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}
         run: |
-          if [ "${{ inputs.args }}" == "" ]; then
-              echo sbom_document=$(cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}") >> "$GITHUB_OUTPUT"
-          fi
+          echo sbom_document=$(cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}") >> "$GITHUB_OUTPUT"
 
   cURL:
     needs: checkout-repositories
