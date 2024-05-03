@@ -8,22 +8,6 @@ on:
         description: A JSON object that captures the arguments for execution.
         required: false
         type: string
-      sbom-repository-name:
-        description: The repository that holds the SBOM document.
-        required: true
-        type: string
-      sbom-path:
-        description: The path to the SBOM document from the root directory.
-        type: string
-        required: true
-      ref:
-        description: The branch, tag, or SHA256 hash to checkout.
-        type: string
-        required: false
-      sbom-source:
-        description: The source from which the SBOM will be read.
-        type: string
-        required: true
     secrets:
       sn-sbom-username:
         required: true
@@ -107,7 +91,8 @@ jobs:
       - name: Report Validation Success
         id: report-validation-success
         if: ${{ steps.validate-runtime-args.outcome == 'success' }}
-        run: echo "✅ Runtime Arguments Validated Successfully"
+        run: |
+          echo "✅ Runtime Arguments Validated Successfully"
 
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
@@ -150,7 +135,6 @@ jobs:
 #            ls "$GITHUB_WORKSPACE/service-now"
 #            echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
 #            cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}"
-
 
 #jobs:
 #  checkout-repo:
