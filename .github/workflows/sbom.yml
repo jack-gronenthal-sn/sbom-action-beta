@@ -88,16 +88,20 @@ jobs:
           echo "::endgroup::"  
           
           exit 1
+
       - name: Report Validation Success
         id: report-validation-success
         if: ${{ steps.validate-runtime-args.outcome == 'success' }}
         run: |
           echo "✅ Runtime Arguments Validated Successfully"
+          provider_type=$(echo "${{ inputs.args }}" | jq -r '.provider.type')
+          echo "provider_type -> $provider_type"
+          
 
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
-          if [ "${{ inputs.sbom-source}}" == "" ]; then
+          if [ "${{ inputs.args }}" == "" ]; then
               echo sbom_document=$(cat "$GITHUB_WORKSPACE/client/${{ inputs.sbom-path }}") >> "$GITHUB_OUTPUT"
           fi
 
