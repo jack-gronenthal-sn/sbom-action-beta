@@ -96,6 +96,10 @@ jobs:
         id: report-validation-failures
         if: ${{ steps.validate-runtime-args.outcome == 'failure' }}
         run: |
+          
+          ls -A $GITHUB_WORKSPACE/service-now
+          ls -A $GITHUB_WORKSPACE/service-now/logs
+          
           echo "::group::Invalid Input Arguments"
           
           error_message=$(cat $GITHUB_WORKSPACE/service-now/logs/error_message)
