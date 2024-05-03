@@ -137,7 +137,6 @@ jobs:
 
       - name: Fetch SBOM Document.
         id: fetch-sbom-document
-        if: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}
         run: |
           {
             echo 'document<<EOF'
