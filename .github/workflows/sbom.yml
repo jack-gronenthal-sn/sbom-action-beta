@@ -140,6 +140,7 @@ jobs:
         run: |
           {
             echo 'document<<EOF'
+          
             if ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}; then
               cat $GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}
             fi
@@ -150,7 +151,6 @@ jobs:
           
             echo EOF
           } >> "$GITHUB_OUTPUT"
-
 
   cURL:
     needs: checkout-repositories
