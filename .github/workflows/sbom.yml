@@ -82,10 +82,19 @@ jobs:
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
           ajv test --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid
           
+          echo "::group::Runtime Arguments Validation"
           if [ $? -eq 0 ]; then
-            echo SUCCESS
+            echo "✅ Runtime Arguments Validated Successfully"
+            echo "::endgroup::"  
           else
-            echo FAILURE
+            ajv --spec=draft2020 -s ./input_schema.json -d ./test/sample_inputs/repository.json >> validation_error_log 2>&1
+            error_message=$(ajv --spec=draft2020 -s ./input_schema.json -d ./test/sample_inputs/repository.json 2> .ajv_error_log ; \
+              sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" .ajv_error_log > error_message ; \
+              cat error_message)
+            echo "::error title=❌ Runtime Arguments Failed Validation::$error_message" # Consider if the single quote will break this
+            cat .ajv_error_log
+            echo "::endgroup::"  
+            exit 1
           fi
 
       - name: Determine how SBOM is being provided.

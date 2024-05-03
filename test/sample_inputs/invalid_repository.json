@@ -1,0 +1,8 @@
+{
+  "provider": {
+    "repository": {
+      "repositoryName": "jack-gronenthal-sn/github-action-consumer",
+      "path": "sboms/sample_sbom.txt"
+    }
+  }
+}
