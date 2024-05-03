@@ -40,6 +40,7 @@ jobs:
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - name: Perform CURL to Vulnerability Response Application
       run: |
+        echo ${{ inputs.document }}
         echo 'Bypassing curl statement'
 #        curl -i \
 #        -H 'Content-Type: application/json' \

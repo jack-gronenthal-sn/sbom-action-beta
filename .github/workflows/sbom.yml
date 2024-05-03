@@ -126,7 +126,7 @@ jobs:
 
   cURL:
     needs: checkout-repositories
-    uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
+    uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
     with:
      operation: upload
      document: ${{ needs.checkout-repositories.outputs.document }}
