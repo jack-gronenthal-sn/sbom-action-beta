@@ -124,7 +124,7 @@ jobs:
         run: |
           echo sanity check
           cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}"
-          echo document=$(cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}") >> "$GITHUB_OUTPUT"
+          echo 'document=$(cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}")' >> "$GITHUB_OUTPUT"
 
   cURL:
     needs: checkout-repositories
