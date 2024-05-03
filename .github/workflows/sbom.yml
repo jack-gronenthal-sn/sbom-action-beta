@@ -43,7 +43,7 @@ jobs:
   checkout-repositories:
     runs-on: ubuntu-latest
     outputs:
-      document: ${{ steps.sbom-document-source.outputs.sbom_document }}
+      document: ${{ steps.fetch-sbom-document.outputs.document }}
       provider_type: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type }}
     steps:
       - name: Checkout the ServiceNow SBOM Workflow.
@@ -144,6 +144,7 @@ jobs:
   cURL:
     needs: checkout-repositories
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
+    if: ${{ needs.checkout-repositories.outputs.document != '' }}
     with:
      operation: upload
      document: '${{ needs.checkout-repositories.outputs.document }}'
