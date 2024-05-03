@@ -99,6 +99,9 @@ jobs:
           
           ls -A $GITHUB_WORKSPACE/service-now
           ls -A $GITHUB_WORKSPACE/service-now/logs
+          cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
+          echo ERROR MESSAGE
+          sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
           
           echo "::group::Invalid Input Arguments"
           
