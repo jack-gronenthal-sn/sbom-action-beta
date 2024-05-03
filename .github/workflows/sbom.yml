@@ -146,7 +146,7 @@ jobs:
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
     with:
      operation: upload
-     document: ${{ needs.checkout-repositories.outputs.document }}
+     document: '${{ needs.checkout-repositories.outputs.document }}'
     secrets:
      sn-instance-url:   ${{ secrets.sn-instance-url }}
      sn-sbom-username:  ${{ secrets.sn-sbom-username }}
