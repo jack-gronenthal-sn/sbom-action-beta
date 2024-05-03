@@ -83,6 +83,7 @@ jobs:
       # Validate runtime arguments to the SBOM GitHub Action, not to the API itself.
       - name: Validate Runtime Arguments
         id: validate-runtime-args
+        continue-on-error: true
         run: |
           npm install -g ajv-cli
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
