@@ -44,6 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       document: ${{ steps.sbom-document-source.outputs.sbom_document }}
+      provider_type: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type }}
     steps:
       - name: Checkout the client repository.
         uses: actions/checkout@v4
@@ -89,14 +90,22 @@ jobs:
           
           exit 1
 
-      - name: Report Validation Success
-        id: report-validation-success
+      - name: Report Validation Success & Set Runtime Arguments
+        id: report-validation-success-and-set-arguments
         if: ${{ steps.validate-runtime-args.outcome == 'success' }}
         run: |
           echo "✅ Runtime Arguments Validated Successfully"
           provider_type=$(echo '${{ inputs.args }}' | jq -r '.provider.type')
-          echo "provider_type -> $provider_type"
           
+          # Set the Outputs
+          echo "provider_type=$provider_type" >> $GITHUB_OUTPUT
+          
+          # Log the Arguments
+          echo "::group::Arguments"
+          echo 'Provider Type: $provider_type'
+          echo "::endgroup::"  
+          
+                  
 
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
