@@ -27,10 +27,59 @@
           "required": [
             "repositoryName",
             "path"
-          ]
+          ],
+          "additionalProperties": false
         },
         "payload": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "The file format of the provided payload."
+            },
+            "document": {
+              "description": "The JSON or XML based BOM document."
+            }
+          },
+          "required": [
+            "document"
+          ],
+          "additionalProperties": false,
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "document",
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "json"
+                  ]
+                },
+                "document": {
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "document"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "xml"
+                  ]
+                },
+                "document": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
         },
         "remote": {
           "type": "object"
