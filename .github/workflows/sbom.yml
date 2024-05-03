@@ -102,7 +102,7 @@ jobs:
           
           # Log the Arguments
           echo "::group::Arguments"
-          echo 'Provider Type: $provider_type'
+          echo Provider Type: $provider_type
           echo "::endgroup::"  
           
                   
