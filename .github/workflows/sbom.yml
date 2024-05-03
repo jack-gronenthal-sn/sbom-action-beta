@@ -94,7 +94,7 @@ jobs:
         if: ${{ steps.validate-runtime-args.outcome == 'success' }}
         run: |
           echo "✅ Runtime Arguments Validated Successfully"
-          provider_type=$(echo "${{ inputs.args }}" | jq -r '.provider.type')
+          provider_type=$(echo '${{ inputs.args }}' | jq -r '.provider.type')
           echo "provider_type -> $provider_type"
           
 
