@@ -140,12 +140,14 @@ jobs:
         run: |
           {
             echo 'document<<EOF'
-            if [ ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}  ]; then
+            if ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'repository' }}; then
               cat $GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}
             fi
-            if [ ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'payload' }} ]; then
+          
+            if ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type == 'payload' }}; then
               echo  ${{ steps.report-validation-success-and-set-arguments.outputs.document }}
             fi
+          
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
