@@ -84,7 +84,7 @@ jobs:
           
           echo "::group::Runtime Arguments Validation"
           echo "Provided runtime arguments:"
-          cat _args.json
+          cat $GITHUB_WORKSPACE/service-now/_args.json
           if [ $? -eq 0 ]; then
             echo "✅ Runtime Arguments Validated Successfully"
             echo "::endgroup::"  
