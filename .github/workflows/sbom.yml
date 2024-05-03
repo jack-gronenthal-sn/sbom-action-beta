@@ -125,7 +125,7 @@ jobs:
           echo sanity check
           cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}"
           document=$(cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}")
-          echo "document=$document" >> "$GITHUB_OUTPUT"
+          echo 'document=$document' >> "$GITHUB_OUTPUT"
       - name: sanity
         run: echo '${{ steps.fetch-sbom-document.outputs.document }}'
 
