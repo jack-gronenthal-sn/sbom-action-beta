@@ -87,6 +87,9 @@ jobs:
           echo "Provided runtime arguments:"
           cat $GITHUB_WORKSPACE/service-now/_args.json
           
+          echo "validation status -> $validation_status"
+          echo "boolean check -> $((validation_status==0))"
+          
           if [ $validation_status -eq 0 ]; then
             echo "✅ Runtime Arguments Validated Successfully"
             echo "::endgroup::"  
