@@ -56,22 +56,8 @@ on:
         required: true
 
 jobs:
-#  setup:
-#    needs: validation
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Inputs
-#        run: |
-#          echo "::group::Inputs"
-#          echo 'Arguments: ${{ inputs.args }}'
-#          echo 'Repository Name: ${{ inputs.sbom-repository-name }}'
-#          echo 'SBOM File Path: ${{ inputs.sbom-path }}'
-#          echo 'SBOM Source'
-#          echo "::endgroup::"
-
   checkout-repositories:
     runs-on: ubuntu-latest
-#    needs: setup
     outputs:
       document: ${{ steps.sbom-document-source.outputs.sbom_document }}
     steps:
@@ -94,8 +80,14 @@ jobs:
         run: |
           npm install -g ajv-cli
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
-          cat $GITHUB_WORKSPACE/service-now/_args.json
-          ajv --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json
+          ajv test --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid
+          
+          if [ $? -eq 0 ]; then
+            echo SUCCESS
+          else
+            echo FAILURE
+          fi
+
       - name: Determine how SBOM is being provided.
         id: sbom-document-source
         run: |
