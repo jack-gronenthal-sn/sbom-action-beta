@@ -102,7 +102,7 @@ jobs:
           fi
 
   cURL:
-    needs: validate-inputs
+    needs: checkout-repositories
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@main
     with:
      operation: upload
