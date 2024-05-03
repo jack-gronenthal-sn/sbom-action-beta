@@ -125,6 +125,14 @@ jobs:
           echo sanity check
           cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}"
           echo 'document=$(cat "$GITHUB_WORKSPACE/client/${{ steps.report-validation-success-and-set-arguments.outputs.path }}")' >> "$GITHUB_OUTPUT"
+      - name: sanity
+        run: echo '${{ steps.fetch-sbom-document.outputs.document }}'
+
+  sanity:
+    runs-on: ubuntu-latest
+    needs: checkout-repositories
+    steps:
+      - run: echo '${{ needs.checkout-repositories.outputs.document }}'
 
   cURL:
     needs: checkout-repositories
