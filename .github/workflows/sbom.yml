@@ -23,14 +23,11 @@ on:
         description: The repository that holds the SBOM document.
         required: true
         type: string
-      sbom-path:
-        description: The path to the SBOM document from the root directory.
-        type: string
-        required: true
-      ref:
-        description: The branch, tag, or SHA256 hash to checkout.
-        type: string
+      version:
+        description: The version of the GitHub Action to be executed.
         required: false
+        type: string
+        default: json-input
     secrets:
       service-now-sbom-username:
         required: true
@@ -40,7 +37,8 @@ on:
         required: true
 
 jobs:
-  checkout-repositories:
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
     outputs:
       document: ${{ steps.fetch-sbom-document.outputs.document }}
@@ -51,7 +49,7 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-          ref: json-input
+          ref: ${{ inputs.version }}
 
       - name: Checkout Node.js
         uses: actions/setup-node@v4
@@ -153,12 +151,12 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   cURL:
-    needs: checkout-repositories
+    needs: setup
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
-    if: ${{ needs.checkout-repositories.outputs.document != '' }}
+    if: ${{ needs.setup.outputs.document != '' }}
     with:
      operation: upload
-     document: '${{ needs.checkout-repositories.outputs.document }}'
+     document: '${{ needs.setup.outputs.document }}'
     secrets:
      sn-instance-url:   ${{ secrets.sn-instance-url }}
      sn-sbom-username:  ${{ secrets.sn-sbom-username }}
