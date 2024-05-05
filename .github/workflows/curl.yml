@@ -47,13 +47,12 @@ jobs:
              ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
              -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}); then
           echo "curl completed successfully"
-#          echo "Response body: $response"
         
           http_code=$(tail -n1 <<< "$response")  # get the last line
           content=$(sed '$ d' <<< "$response")   # get all but the last line which contains the status code
   
-          echo "CODE $http_code"
-          echo "CONTENT $content"
+          echo CODE $http_code
+          echo CONTENT $content
         else
           echo "curl failed"
         fi
