@@ -40,12 +40,25 @@ jobs:
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - name: Perform CURL to Vulnerability Response Application
       run: |
-        response=$(curl -i \
-        -H 'Content-Type: application/json' \
-        -d '${{ inputs.document }}' \
-        ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-        -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }})
-        echo $response
+        
+        if response=$(curl -i -f \
+             -H 'Content-Type: application/json' \
+             -d '${{ inputs.document }}' \
+             ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+             -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }}); then
+          echo "curl completed successfully"
+          echo "Response body: $response"
+        else
+          echo "curl failed"
+        fi
+
+#        response=$(curl -i \
+#        -H 'Content-Type: application/json' \
+#        -d '${{ inputs.document }}' \
+#        ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+#        -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }})
+        
+#        echo RESPONSE $response
 
   status:
     runs-on: ubuntu-latest
