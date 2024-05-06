@@ -40,11 +40,11 @@ jobs:
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - name: Perform CURL to Vulnerability Response Application
       run: |
-        response=$(curl -i -f -s -w '\n%{response_code}' \             
-             -H 'Content-Type: application/json' \
-             -d '${{ inputs.document }}' \
-             ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-             -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
+        response=$(curl -i -f -s \
+              -H 'Content-Type: application/json' \
+              -d '${{ inputs.document }}' \
+              ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+              -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
         )
         data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
         status_code=$(echo "$response" | awk '{print $NF}')
