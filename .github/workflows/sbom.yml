@@ -44,6 +44,16 @@ jobs:
       document: ${{ steps.fetch-sbom-document.outputs.document }}
       provider_type: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type }}
     steps:
+      - run: echo '### ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
+      - run: echo '# Inputs' >> $GITHUB_STEP_SUMMARY
+      - run: |
+          {
+              echo 'step_summary<<EOF'
+              echo '```json'
+              echo ${{ inputs }}
+              echo '```'
+              echo EOF
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
         with:

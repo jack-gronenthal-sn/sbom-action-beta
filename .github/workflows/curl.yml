@@ -41,18 +41,16 @@ jobs:
     - name: Perform CURL to Vulnerability Response Application
       run: |
     
-        echo '### Hello world! 🚀' >> $GITHUB_STEP_SUMMARY
+        response=$(curl -f -s \
+              -H 'Content-Type: application/json' \
+              -d '${{ inputs.document }}' \
+              --write-out '\n%{response_code}' \
+              ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+              -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
+        )
 
-#response=$(curl -f -s \
-#      -H 'Content-Type: application/json' \
-#      -d '${{ inputs.document }}' \
-#      --write-out '\n%{response_code}' \
-#      ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-#      -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
-#)
-#
-#data=${response%$'\n'*}
-#status_code="${response: -3}"
+        data=${response%$'\n'*}
+        status_code="${response: -3}"
 
 #  status:
 #    runs-on: ubuntu-latest
