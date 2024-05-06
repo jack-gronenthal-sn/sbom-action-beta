@@ -74,7 +74,7 @@ jobs:
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
           
           mkdir $GITHUB_WORKSPACE/service-now/logs
-          ajv test --changes=--use-defaults --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid 2> $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log ; \
+          ajv test --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid 2> $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log ; \
             sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
 
       - name: Report Validation Failures
