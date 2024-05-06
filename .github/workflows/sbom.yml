@@ -50,7 +50,7 @@ jobs:
           echo '### Input Arguments' >> $GITHUB_STEP_SUMMARY
           
           if [ '${{ inputs.args.summary.doSummarize }}' == '' ]; then
-            echo "_Default arguments values in effect._" >> $GITHUB_STEP_SUMMARY
+            echo "_Default argument values in effect._" >> $GITHUB_STEP_SUMMARY
           fi
           
           {
@@ -182,5 +182,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo '${{ needs.job1.outputs.firstword }}'
+          echo '${{ needs.upload-sbom.outputs.bom_record_id }}'
       

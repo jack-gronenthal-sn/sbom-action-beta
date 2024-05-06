@@ -24,7 +24,7 @@ on:
         required: false
         description: The SBOM document to be uploaded.
     outputs:
-      bomRecordId:
+      bom_record_id:
         description: "The BOM Document ID that is returned from ServiceNow SBOM."
         value: ${{ jobs.upload.outputs.bom_record_id }}
     secrets:
