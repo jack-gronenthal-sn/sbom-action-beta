@@ -53,9 +53,6 @@ jobs:
     - name: Perform CURL to Vulnerability Response Application
       id: upload-curl
       run: |
-        if [ '${{ inputs.operation }}' == 'status' ]; then
-          
-        fi
         
         response=$(curl -f -s \
               -H 'Content-Type: application/json' \
