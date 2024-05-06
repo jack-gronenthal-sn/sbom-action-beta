@@ -50,7 +50,7 @@ jobs:
     steps:
     - name: Upload
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
-    - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
+    - if: ${{  ( inputs.operation == 'upload' ) && (inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false) }}
       run: echo '### ServiceNow SBOM Upload' >> $GITHUB_STEP_SUMMARY
     - name: Perform CURL to Vulnerability Response Application
       id: upload-curl
