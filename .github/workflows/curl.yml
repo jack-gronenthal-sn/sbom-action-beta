@@ -40,7 +40,6 @@ jobs:
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - name: Perform CURL to Vulnerability Response Application
       run: |
-        
         response=$(curl -i -f -s -w "\n%{response_code}" \             
              -H 'Content-Type: application/json' \
              -d '${{ inputs.document }}' \
@@ -49,30 +48,8 @@ jobs:
         data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
         status_code=$(echo "$response" | awk '{print $NF}')
         
-        echo DATA $data
-        echo STATUS_CODE $status_code
-        
-#        if ; then
-#          echo "curl completed successfully"
-#
-#          http_code=$(tail -n1 <<< "$response")  # get the last line
-#          content=$(sed '$ d' <<< "$response")   # get all but the last line which contains the status code
-#
-#          # Last three digits: sed 's/.*\([0-9]\{3\}\)$/\1/'
-#          # All but last three: sed 's/\(.*\)$/\1/'
-#          echo CODE $http_code
-#          echo CONTENT $content
-#        else
-#          echo "curl failed"
-#        fi
-
-#        response=$(curl -i \
-#        -H 'Content-Type: application/json' \
-#        -d '${{ inputs.document }}' \
-#        ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-#        -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }})
-        
-#        echo RESPONSE $response
+        echo DATA "$data"
+        echo STATUS_CODE "$status_code"
 
   status:
     runs-on: ubuntu-latest
