@@ -49,6 +49,8 @@ jobs:
           echo '## ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
           echo '### Input Arguments' >> $GITHUB_STEP_SUMMARY
           
+          echo SANITY '${{ toJSON(inputs.args) }}'
+          
           if [ '${{ inputs.args.summary.doSummarize }}' == '' ]; then
             echo "_Default argument values in effect._" >> $GITHUB_STEP_SUMMARY
           fi
