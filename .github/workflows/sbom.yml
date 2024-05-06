@@ -181,7 +181,7 @@ jobs:
     name: Get Status of SBOM from ServiceNow
     needs: upload-sbom
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
-    if: ${{ needs.setup.outputs.document != '' }}
+    if: ${{ needs.setup.outputs.document != '' }} && ${{ needs.upload-sbom.outputs.bom_record_id != '' }}
     with:
       operation: status
       recordId: '${{ needs.upload-sbom.outputs.bom_record_id }}'
