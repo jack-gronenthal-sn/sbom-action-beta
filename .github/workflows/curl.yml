@@ -40,11 +40,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.operation }} == 'upload'
     outputs:
-      bom_record_id: ${{ steps.upload.outputs.bom_record_id }}
+      bom_record_id: ${{ steps.Upload.outputs.bom_record_id }}
 
     steps:
     - name: Upload
-      id: upload
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
       run: echo '### ServiceNow SBOM Upload' >> $GITHUB_STEP_SUMMARY
@@ -66,7 +65,7 @@ jobs:
         
           bom_record_id=$(echo "$data" | jq -r '.result.bomRecordId')
           echo SANITY $bom_record_id
-          echo "bom_record_id=$bom_record_id" >> $GITHUB_OUTPUT
+          echo "bom_record_id=$bom_record_id" >> "$GITHUB_OUTPUT"
         
           if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
             {
