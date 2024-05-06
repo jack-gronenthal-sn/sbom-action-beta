@@ -43,9 +43,10 @@ jobs:
         response=$(curl -i -f -s \
               -H 'Content-Type: application/json' \
               -d '${{ inputs.document }}' \
+              --write-out '\n%{response_code}'
               ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
               -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
-              -w '\n%{http_code}'
+              
         )
         data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
         status_code=$(echo "$response" | awk '{print $NF}')
