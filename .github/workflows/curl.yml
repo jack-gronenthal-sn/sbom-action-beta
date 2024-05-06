@@ -43,7 +43,7 @@ jobs:
         response=$(curl -i -f -s \
               -H 'Content-Type: application/json' \
               -d '${{ inputs.document }}' \
-              --write-out '\n%{response_code}'
+              --write-out '\n%{response_code}' \
               ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
               -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
               
