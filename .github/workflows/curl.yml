@@ -23,6 +23,10 @@ on:
         type: string
         required: false
         description: The SBOM document to be uploaded.
+      recordId:
+        type: string
+        required: false
+        description: The record ID returned from the upload API.
     outputs:
       bom_record_id:
         description: "The BOM Document ID that is returned from ServiceNow SBOM."
@@ -79,19 +83,21 @@ jobs:
           fi
         fi
 
-  sanity:
-    needs: upload
+  status:
     runs-on: ubuntu-latest
+    if: ${{ inputs.operation }} == 'status'
     steps:
-      - run: echo '${{ needs.Upload.outputs.bom_record_id }}'
+    - name: Status
+      run: |
+        echo "Detected a status operation -> ${{ inputs.operation }}"
+        
+        response=$(curl -f -s --request GET \
+              --write-out '\n%{response_code}' \
+              ${{ secrets.sn-instance-url}}/api/sbom/core/upload/status?bomRecordId=${{ inputs.recordId }} \
+              -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
+        )
+        
+        echo $response
 
-#  status:
-#    runs-on: ubuntu-latest
-#    if: ${{ inputs.operation }} == 'status'
-#    steps:
-#    - name: Status
-#      run: echo "Detected a status operation -> ${{ inputs.operation }}"
-
-
-#        data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
-#        status_code=$(echo "$response" | awk '{print $NF}')
+            
+      

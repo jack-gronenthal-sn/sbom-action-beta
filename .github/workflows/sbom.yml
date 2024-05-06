@@ -177,10 +177,17 @@ jobs:
      sn-sbom-username:  ${{ secrets.sn-sbom-username }}
      sn-sbom-password:  ${{ secrets.sn-sbom-password }}
 
-  poll:
+  status-sbom:
+    name: Get Status of SBOM from ServiceNow
     needs: upload-sbom
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo '${{ needs.upload-sbom.outputs.bom_record_id }}'
+    uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
+    if: ${{ needs.setup.outputs.document != '' }}
+    with:
+      operation: status
+      recordId: '${{ needs.upload-sbom.outputs.bom_record_id }}'
+    secrets:
+      sn-instance-url: ${{ secrets.sn-instance-url }}
+      sn-sbom-username: ${{ secrets.sn-sbom-username }}
+      sn-sbom-password: ${{ secrets.sn-sbom-password }}
+
       
