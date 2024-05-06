@@ -48,11 +48,7 @@ jobs:
       - run: echo '# Inputs' >> $GITHUB_STEP_SUMMARY
       - run: |
           {
-              echo 'summary<<EOF'
-              echo '~~~json'
               echo ${{ toJSON(inputs) }}
-              echo '~~~'
-              echo 'EOF'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
