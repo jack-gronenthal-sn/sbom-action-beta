@@ -40,7 +40,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.operation }} == 'upload'
     outputs:
-      bom_record_id: ${{ steps.Upload.outputs.bom_record_id }}
+      bom_record_id: ${{ steps.upload-curl.outputs.bom_record_id }}
+      sanity: ${{ steps.upload-curl.outputs.sanity }}
 
     steps:
     - name: Upload
@@ -48,6 +49,7 @@ jobs:
     - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
       run: echo '### ServiceNow SBOM Upload' >> $GITHUB_STEP_SUMMARY
     - name: Perform CURL to Vulnerability Response Application
+      id: upload-curl
       run: |
     
         response=$(curl -f -s \
@@ -66,6 +68,7 @@ jobs:
           bom_record_id=$(echo "$data" | jq -r '.result.bomRecordId')
           echo SANITY $bom_record_id
           echo "bom_record_id=$bom_record_id" >> "$GITHUB_OUTPUT"
+          echo "repository_name=test" >> $GITHUB_OUTPUT
         
           if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
             {
@@ -75,6 +78,7 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
         fi
+
   sanity:
     needs: upload
     runs-on: ubuntu-latest
