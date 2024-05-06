@@ -46,12 +46,13 @@ jobs:
     steps:
       - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
         run: |
+          echo '## ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
+          echo '### Input Arguments' >> $GITHUB_STEP_SUMMARY
+          
           if [ '${{ inputs.args.summary.doSummarize }}' == '' ]; then
-            echo "_Default input argument values in effect._" >> $GITHUB_STEP_SUMMARY
+            echo "_Default arguments values in effect._" >> $GITHUB_STEP_SUMMARY
           fi
           
-          echo '## ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
-          echo '### Inputs' >> $GITHUB_STEP_SUMMARY
           {
               echo '~~~json'
               jq <<< '${{ inputs.args }}'

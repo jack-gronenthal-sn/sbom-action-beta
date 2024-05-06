@@ -38,6 +38,8 @@ jobs:
     steps:
     - name: Upload
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
+    - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
+      run: echo '### ServiceNow SBOM Upload' >> $GITHUB_STEP_SUMMARY
     - name: Perform CURL to Vulnerability Response Application
       run: |
     
@@ -51,6 +53,14 @@ jobs:
 
         data=${response%$'\n'*}
         status_code="${response: -3}"
+        
+        if [ "$status_code" == "200" &&  ('${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}') ]; then
+          {
+              echo '~~~json'
+              jq <<< $data
+              echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
+        fi
 
 #  status:
 #    runs-on: ubuntu-latest
