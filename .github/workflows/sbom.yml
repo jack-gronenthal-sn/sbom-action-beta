@@ -44,15 +44,15 @@ jobs:
       document: ${{ steps.fetch-sbom-document.outputs.document }}
       provider_type: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type }}
     steps:
-#      - if: ${{ inputs.args.summary.doSummarize != false }}
-#        run: |
-#          echo '### ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
-#          echo '## Inputs' >> $GITHUB_STEP_SUMMARY
-#          {
-#              echo '~~~json'
-#              jq <<< '${{ inputs.args }}'
-#              echo '~~~'
-#          } >> "$GITHUB_STEP_SUMMARY"
+      - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
+        run: |
+          echo '### ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
+          echo '## Inputs' >> $GITHUB_STEP_SUMMARY
+          {
+              echo '~~~json'
+              jq <<< '${{ inputs.args }}'
+              echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Checkout the ServiceNow SBOM Workflow.
         uses: actions/checkout@v4
         with:
@@ -73,15 +73,9 @@ jobs:
           npm install -g ajv-cli
           echo '${{ inputs.args }}' >> $GITHUB_WORKSPACE/service-now/_args.json
           
-          echo BEFORE
-          cat $GITHUB_WORKSPACE/service-now/_args.json
-          
           mkdir $GITHUB_WORKSPACE/service-now/logs
-          ajv test --use-defaults --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid 2> $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log ; \
+          ajv test --changes=--use-defaults --spec=draft2020 -s $GITHUB_WORKSPACE/service-now/input_schema.json -d $GITHUB_WORKSPACE/service-now/_args.json --valid 2> $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log ; \
             sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
-          
-          echo AFTER
-          cat $GITHUB_WORKSPACE/service-now/_args.json
 
       - name: Report Validation Failures
         id: report-validation-failures
