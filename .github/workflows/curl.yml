@@ -51,6 +51,7 @@ jobs:
         data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
         status_code=$(echo "$response" | awk '{print $NF}')
 
+        echo RESPONSE "$response"
         echo DATA "$data"
         echo STATUS_CODE "$status_code"
 
