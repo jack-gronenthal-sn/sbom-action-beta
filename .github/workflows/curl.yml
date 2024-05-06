@@ -65,9 +65,10 @@ jobs:
         if [ "$status_code" == "200" ]; then
         
           bom_record_id=$(echo "$data" | jq -r '.result.bomRecordId')
+          echo SANITY $bom_record_id
           echo "bom_record_id=$bom_record_id" >> $GITHUB_OUTPUT
         
-          if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]]; then
+          if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
             {
               echo '~~~json'
               jq <<< $data
