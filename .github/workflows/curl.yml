@@ -45,6 +45,7 @@ jobs:
               -d '${{ inputs.document }}' \
               ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
               -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
+              -w '\n%{http_code}'
         )
         data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
         status_code=$(echo "$response" | awk '{print $NF}')
