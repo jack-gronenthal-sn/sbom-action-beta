@@ -42,20 +42,21 @@ on:
 jobs:
   upload:
     runs-on: ubuntu-latest
-    if: ${{ inputs.operation }} == 'upload'
+    if:  inputs.operation == 'upload'
     outputs:
       bom_record_id: ${{ steps.upload-curl.outputs.bom_record_id }}
       sanity: ${{ steps.upload-curl.outputs.sanity }}
 
     steps:
-    - name: Upload
-      run: echo "Detected an upload operation -> ${{ inputs.operation }}"
-    - if: ${{  ( inputs.operation == 'upload' ) && (inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false) }}
+    - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
       run: echo '### ServiceNow SBOM Upload' >> $GITHUB_STEP_SUMMARY
     - name: Perform CURL to Vulnerability Response Application
       id: upload-curl
       run: |
-    
+        if [ '${{ inputs.operation }}' == 'status' ]; then
+          
+        fi
+        
         response=$(curl -f -s \
               -H 'Content-Type: application/json' \
               -d '${{ inputs.document }}' \
@@ -70,7 +71,6 @@ jobs:
         if [ "$status_code" == "200" ]; then
         
           bom_record_id=$(echo "$data" | jq -r '.result.bomRecordId')
-          echo SANITY $bom_record_id
           echo "bom_record_id=$bom_record_id" >> "$GITHUB_OUTPUT"
           echo "repository_name=test" >> $GITHUB_OUTPUT
         
@@ -85,19 +85,32 @@ jobs:
 
   status:
     runs-on: ubuntu-latest
-    if: ${{ inputs.operation }} == 'status'
+    if: inputs.operation == 'status'
     steps:
     - name: Status
       run: |
-        echo "Detected a status operation -> ${{ inputs.operation }}"
-        
         response=$(curl -f -s --request GET \
               --write-out '\n%{response_code}' \
               ${{ secrets.sn-instance-url}}/api/sbom/core/upload/status?bomRecordId=${{ inputs.recordId }} \
               -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
         )
-        
-        echo $response
 
+        data=${response%$'\n'*}
+        status_code="${response: -3}"
+
+        if [ "$status_code" == "200" ]; then
+
+          bom_record_id=$(echo "$data" | jq -r '.result.bomRecordId')
+          echo "bom_record_id=$bom_record_id" >> "$GITHUB_OUTPUT"
+          echo "repository_name=test" >> $GITHUB_OUTPUT
+
+          if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
+            {
+              echo '~~~json'
+              jq <<< $data
+              echo '~~~'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+        fi
             
       
