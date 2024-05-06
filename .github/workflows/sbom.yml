@@ -50,6 +50,9 @@ jobs:
           echo '### Input Arguments' >> $GITHUB_STEP_SUMMARY
           
           echo SANITY '${{ toJSON(inputs.args) }}'
+          doSummarize=$(echo '${{ inputs.args }}' | jq -r '.summary.doSummarize')
+          echo CHECK THIS VALUE $doSummarize
+          
           
           if [ '${{ inputs.args.summary.doSummarize }}' == '' ]; then
             echo "_Default argument values in effect._" >> $GITHUB_STEP_SUMMARY
