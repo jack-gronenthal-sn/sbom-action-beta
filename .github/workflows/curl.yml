@@ -75,6 +75,11 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
         fi
+  sanity:
+    needs: upload
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ needs.Upload.outputs.bom_record_id }}'
 
 #  status:
 #    runs-on: ubuntu-latest
