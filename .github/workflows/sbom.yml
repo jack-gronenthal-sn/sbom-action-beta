@@ -48,10 +48,10 @@ jobs:
       - run: echo '# Inputs' >> $GITHUB_STEP_SUMMARY
       - run: |
           
-          summary=$(cat << EOF
-            echo '```'
-            echo ${{ toJSON(inputs) }}
-            echo '```'
+          summary=$(cat<<EOF
+            ```json
+            ${{ toJSON(inputs) }}
+            ```
             EOF
           )
           echo $summary >> "$GITHUB_STEP_SUMMARY"
