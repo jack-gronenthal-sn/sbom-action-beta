@@ -40,27 +40,26 @@ jobs:
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - name: Perform CURL to Vulnerability Response Application
       run: |
-        response=$(curl -f -s \
-              -H 'Content-Type: application/json' \
-              -d '${{ inputs.document }}' \
-              --write-out '\n%{response_code}' \
-              ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-              -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
-        )
+    
+        echo '### Hello world! 🚀' >> $GITHUB_STEP_SUMMARY
 
-        data=${response%$'\n'*}
-        status_code="${response: -3}"
+#response=$(curl -f -s \
+#      -H 'Content-Type: application/json' \
+#      -d '${{ inputs.document }}' \
+#      --write-out '\n%{response_code}' \
+#      ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
+#      -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
+#)
+#
+#data=${response%$'\n'*}
+#status_code="${response: -3}"
 
-        echo RESPONSE "$response"
-        echo DATA "$data"
-        echo STATUS_CODE "$status_code"
-
-  status:
-    runs-on: ubuntu-latest
-    if: ${{ inputs.operation }} == 'status'
-    steps:
-    - name: Status
-      run: echo "Detected a status operation -> ${{ inputs.operation }}"
+#  status:
+#    runs-on: ubuntu-latest
+#    if: ${{ inputs.operation }} == 'status'
+#    steps:
+#    - name: Status
+#      run: echo "Detected a status operation -> ${{ inputs.operation }}"
 
 
 #        data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
