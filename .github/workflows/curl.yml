@@ -44,10 +44,11 @@ jobs:
              -H 'Content-Type: application/json' \
              -d '${{ inputs.document }}' \
              ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
-             -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }})
+             -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
+        )
         data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
         status_code=$(echo "$response" | awk '{print $NF}')
-        
+
         echo DATA "$data"
         echo STATUS_CODE "$status_code"
 
