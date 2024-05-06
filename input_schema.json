@@ -83,6 +83,9 @@
         },
         "remote": {
           "type": "object"
+        },
+        "type": {
+          "enum": [ "repository", "payload", "remote" ]
         }
       },
       "required": [
@@ -128,7 +131,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "summary": {
       "description": "Options to configure summary output of Action on GitHub.",

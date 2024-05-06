@@ -6,5 +6,8 @@
       "path": "sboms/sample_sbom.txt",
       "ref": "json-input"
     }
+  },
+  "summary": {
+    "doSummarize": false
   }
 }

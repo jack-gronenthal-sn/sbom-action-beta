@@ -45,10 +45,9 @@ jobs:
       provider_type: ${{ steps.report-validation-success-and-set-arguments.outputs.provider_type }}
     steps:
       - if: ${{ inputs.args.summary.doSummarize == true }}
-        run: echo '### ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
-      - if: ${{ inputs.args.summary.doSummarize == true }}
-        run: echo '## Inputs' >> $GITHUB_STEP_SUMMARY
-      - run: |
+        run: |
+          echo '### ServiceNow SBOM Action 🚀' >> $GITHUB_STEP_SUMMARY
+          echo '## Inputs' >> $GITHUB_STEP_SUMMARY
           {
               echo '~~~json'
               jq <<< '${{ inputs.args }}'
