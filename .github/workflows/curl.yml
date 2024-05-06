@@ -49,15 +49,11 @@ jobs:
         )
 
         data=${response%$'\n'*}
-        code=${response%*'\n'$}
+        status_code="${response: -3}"
 
         echo RESPONSE "$response"
         echo DATA "$data"
-        echo STATUS_CODE "$code"
-        echo STATUS_CODE_2 
-        echo "$code" | tail -n1
-        echo STATUS_CODE_3
-        echo "${response: -3}"
+        echo STATUS_CODE "$status_code"
 
   status:
     runs-on: ubuntu-latest
