@@ -23,6 +23,10 @@ on:
         type: string
         required: false
         description: The SBOM document to be uploaded.
+    outputs:
+      bomRecordId:
+        description: "The BOM Document ID that is returned from ServiceNow SBOM."
+        value: ${{ jobs.upload.outputs.bom_record_id }}
     secrets:
       sn-instance-url:
         required: true
@@ -35,8 +39,12 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     if: ${{ inputs.operation }} == 'upload'
+    outputs:
+      bom_record_id: ${{ steps.upload.outputs.bom_record_id }}
+
     steps:
     - name: Upload
+      id: upload
       run: echo "Detected an upload operation -> ${{ inputs.operation }}"
     - if: ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}
       run: echo '### ServiceNow SBOM Upload' >> $GITHUB_STEP_SUMMARY
@@ -54,12 +62,18 @@ jobs:
         data=${response%$'\n'*}
         status_code="${response: -3}"
         
-        if [ "$status_code" == "200" ] &&  [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
-          {
+        if [ "$status_code" == "200" ]; then
+        
+          bom_record_id=$(echo "$data" | jq -r '.result.bomRecordId')
+          echo "bom_record_id=$bom_record_id" >> $GITHUB_OUTPUT
+        
+          if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]]; then
+            {
               echo '~~~json'
               jq <<< $data
               echo '~~~'
-          } >> "$GITHUB_STEP_SUMMARY"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
         fi
 
 #  status:

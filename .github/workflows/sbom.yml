@@ -164,7 +164,8 @@ jobs:
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
-  cURL:
+  upload-sbom:
+    name: Upload SBOM to ServiceNow
     needs: setup
     uses: jack-gronenthal-sn/sbom-action-beta/.github/workflows/curl.yml@json-input
     if: ${{ needs.setup.outputs.document != '' }}
@@ -175,3 +176,11 @@ jobs:
      sn-instance-url:   ${{ secrets.sn-instance-url }}
      sn-sbom-username:  ${{ secrets.sn-sbom-username }}
      sn-sbom-password:  ${{ secrets.sn-sbom-password }}
+
+  poll:
+    needs: upload-sbom
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo '${{ needs.job1.outputs.firstword }}'
+      
