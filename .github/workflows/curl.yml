@@ -48,12 +48,15 @@ jobs:
               -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
         )
         
-        data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
-        status_code=$(echo "$response" | awk '{print $NF}')
+#        data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
+#        status_code=$(echo "$response" | awk '{print $NF}')
+
+        data=${response%$'\n'*}
+        code=${response%*'\n'$}
 
         echo RESPONSE "$response"
         echo DATA "$data"
-        echo STATUS_CODE "$status_code"
+        echo STATUS_CODE "$code"
 
   status:
     runs-on: ubuntu-latest
