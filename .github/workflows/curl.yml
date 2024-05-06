@@ -54,7 +54,7 @@ jobs:
         data=${response%$'\n'*}
         status_code="${response: -3}"
         
-        if [ "$status_code" == "200" ] &&  [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }}) ]; then
+        if [ "$status_code" == "200" ] &&  [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
           {
               echo '~~~json'
               jq <<< $data
