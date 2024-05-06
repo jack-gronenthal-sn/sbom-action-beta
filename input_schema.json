@@ -129,6 +129,17 @@
           }
         }
       ]
+    },
+    "summary": {
+      "description": "Options to configure summary output of Action on GitHub.",
+      "type": "object",
+      "properties": {
+        "doSummarize": {
+          "type": "boolean",
+          "description": "Assert for summaries to auto-generate on GitHub.",
+          "default": true
+        }
+      }
     }
   },
   "required": [
