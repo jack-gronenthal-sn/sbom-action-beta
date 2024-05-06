@@ -49,16 +49,6 @@ jobs:
       - run: |
           {
               echo '~~~json'
-              echo '${{ toJSON(inputs.args) }}'
-              echo '~~~'
-          } >> "$GITHUB_STEP_SUMMARY"
-          {
-              echo '~~~json'
-              echo '${{ inputs.args }}'
-              echo '~~~'
-          } >> "$GITHUB_STEP_SUMMARY"
-          {
-              echo '~~~json'
               jq <<< '${{ inputs.args }}'
               echo '~~~'
           } >> "$GITHUB_STEP_SUMMARY"
