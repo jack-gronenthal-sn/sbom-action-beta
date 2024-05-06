@@ -47,9 +47,6 @@ jobs:
               ${{ secrets.sn-instance-url}}/api/sbom/core/upload \
               -u ${{ secrets.sn-sbom-username }}:${{ secrets.sn-sbom-password }} \
         )
-        
-#        data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
-#        status_code=$(echo "$response" | awk '{print $NF}')
 
         data=${response%$'\n'*}
         code=${response%*'\n'$}
@@ -64,3 +61,7 @@ jobs:
     steps:
     - name: Status
       run: echo "Detected a status operation -> ${{ inputs.operation }}"
+
+
+#        data=$(echo "$response" | awk '{$NF=""; sub(/[[:space:]]+$/, "")}1')
+#        status_code=$(echo "$response" | awk '{print $NF}')
