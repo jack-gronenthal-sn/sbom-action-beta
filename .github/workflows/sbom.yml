@@ -101,8 +101,8 @@ jobs:
           if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize == true }} ]; then
             {
               echo '### ❌ Invalid Input Arguments' >> $GITHUB_STEP_SUMMARY
-              echo '~~~json'
-              jq <<< cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
+              echo '~~~'
+              cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
               echo '~~~'
               echo '> **🚧** Correct input arguments before re-executing.'
             } >> "$GITHUB_STEP_SUMMARY"
