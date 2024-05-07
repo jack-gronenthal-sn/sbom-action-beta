@@ -62,22 +62,6 @@
                   "type": "object"
                 }
               }
-            },
-            {
-              "type": "object",
-              "required": [
-                "document"
-              ],
-              "properties": {
-                "type": {
-                  "enum": [
-                    "xml"
-                  ]
-                },
-                "document": {
-                  "type": "string"
-                }
-              }
             }
           ]
         },
