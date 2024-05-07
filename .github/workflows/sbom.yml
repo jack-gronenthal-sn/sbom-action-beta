@@ -96,7 +96,11 @@ jobs:
           error_message=$(sed -n "s/.*message: \"\([^\"]*\)\".*/\1/p" $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log)
           echo "::error title=❌ Runtime Arguments Failed Validation::$error_message" # Consider if the single quote will break this
           cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
-          echo "::endgroup::"  
+          echo "::endgroup::"
+          
+          if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize == true }} ]; then
+            cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log >> "$GITHUB_STEP_SUMMARY"
+          fi
           
           exit 1
 
