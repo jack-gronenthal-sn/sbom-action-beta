@@ -99,7 +99,13 @@ jobs:
           echo "::endgroup::"
           
           if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize == true }} ]; then
-            cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo '### ❌ Invalid Input Arguments' >> $GITHUB_STEP_SUMMARY
+              echo '~~~json'
+              jq <<< cat $GITHUB_WORKSPACE/service-now/logs/.ajv_error_log
+              echo '~~~'
+              echo '> **🚧** Correct input arguments before re-executing.'
+            } >> "$GITHUB_STEP_SUMMARY"
           fi
           
           exit 1
