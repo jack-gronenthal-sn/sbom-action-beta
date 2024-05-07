@@ -103,6 +103,7 @@ jobs:
 
           if [ ${{ inputs.args.summary.doSummarize == '' || inputs.args.summary.doSummarize != false }} ]; then
             {
+              echo '### ServiceNow SBOM Result' >> $GITHUB_STEP_SUMMARY
               echo '~~~json'
               jq <<< $data
               echo '~~~'
