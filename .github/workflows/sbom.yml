@@ -68,7 +68,7 @@ jobs:
         with:
           repository: jack-gronenthal-sn/sbom-action-beta
           path: service-now
-          ref: ${{ inputs.version }}
+          ref: json-input
 
       - name: Checkout Node.js
         uses: actions/setup-node@v4
